@@ -17,8 +17,5 @@ RUN apt-get update && \
     apt-get clean
 RUN cp ./build/src/executionmanagement/aws-iot-fleetwise-edge /usr/bin/
 ADD start-fwe.sh /usr/bin
-#RUN mkdir -p /etc/aws-iot-fleetwise/ && \
-#    touch /etc/aws-iot-fleetwise/certificate.pem && \
-#    touch /etc/aws-iot-fleetwise/private-key.key
 
 CMD ["/bin/bash", "/usr/bin/start-fwe.sh"]

@@ -24,5 +24,5 @@ cd /root/aws-iot-fleetwise-edge
 #sed -i 's/Info/Trace/' /etc/aws-iot-fleetwise/config-0.json 
 cat /etc/aws-iot-fleetwise/config-0.json
 /usr/bin/aws-iot-fleetwise-edge /etc/aws-iot-fleetwise/config-0.json
-/usr/bin/candump $CAN_IF
+#/usr/bin/candump $CAN_IF
 
