@@ -26,6 +26,7 @@ class canigen:
         self.__values = {'sig':{},'pid':{},'dtc':{}}
         if not database_filename is None:
             self.__db = cantools.database.load_file(database_filename)
+            print(self.__db, file=sys.stderr)
             for msg in self.__db.messages:
                 for sig in msg.signals:
                     self.__sig_names.append(sig.name)

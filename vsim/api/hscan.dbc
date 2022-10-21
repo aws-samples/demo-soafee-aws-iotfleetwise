@@ -1,6 +1,5 @@
 VERSION ""
 
-
 NS_ : 
 	NS_DESC_
 	CM_
@@ -33,49 +32,82 @@ NS_ :
 
 BS_:
 
-BU_: ECM_HS BCM_HS
+BU_: UC_Frein UC_Car CMM UC_Dira Capt_Vol BV AAS BVMP SBW BSI ASR_plus ESM MDD Capt_ALG OUTIL_DIAG XCPonCAN Bosch_Plant Unknown MultipleNodes
 
+BO_ 1042 HS1_DAT_BSI_412: 8 UC_Car
+ SG_ HS1_ETAT_OUVRANTS : 55|5@0+ (1,0) [0|31] "NOTDEF" UC_Frein
+ SG_ HS1_REQ_DECON_ASR_ESP : 23|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_CONTACT_FREIN1_HS : 0|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_MARCHE_AR_BVM : 2|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_CONTACT_FREIN_PRK : 3|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_CONTACT_FREIN1 : 5|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+        
+BO_ 1458 HS1_CONTEXTE_1_5B2: 8 BSI
+ SG_ HS1_TEMP_AIR_EXT : 23|8@0+ (0.5,-40) [-40|85] "C" UC_Frein
 
-BO_ 401 Engine: 8 Vector__XXX
- SG_ ThrottlePosition : 63|8@0+ (0.392157,0) [0|100.000035] "%" Vector__XXX
+BA_DEF_ SG_  "GenSigMappingName" STRING;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "PERIODICAL","PERIODICAL-EVENT","EVENT","ONCE","ONCE-EVENT","NOTDEF";
+BA_DEF_ SG_  "GenSigErrorValue" STRING;
+BA_DEF_ SG_  "GenSigStartValue" INT 0 65535;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgTimeoutTime" INT 0 65535;
 
-BO_ 381 ABS: 8 Vector__XXX
- SG_ VehicleSpeed : 7|12@0+ (0.0625,0) [0|255.9375] "km / h"  ECM_HS,BCM_HS
- SG_ SteeringPosition : 23|12@0+ (0.0439453125,-90) [-90|89.9560546875] "deg"  ECM_HS,BCM_HS
- SG_ BrakePressure : 39|8@0+ (75,0) [0|19125] "kPa"  ECM_HS,BCM_HS
+BA_DEF_ EV_  "GenEnvAutoGenCtrl" ENUM  "No","Yes";
+BA_DEF_ EV_  "GenEnvMsgOffset" INT 0 2147483647;
+BA_DEF_ EV_  "GenEnvMsgName" STRING;
+BA_DEF_ EV_  "GenEnvIsGeneratedSnd" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigEnvVarType" ENUM  "int","float","undef";
+BA_DEF_  "GenEnvVarPrefix" STRING;
+BA_DEF_  "GenEnvVarEndingSnd" STRING;
+BA_DEF_  "GenEnvVarEndingDsp" STRING;
 
-BO_ 532 Transmission: 8 Vector__XXX
- SG_ Gear : 7|8@0+ (1,-1) [-1|6] ""  ECM_HS,BCM_HS
+BA_DEF_DEF_  "GenSigMappingName" "NOTDEF";
+BA_DEF_DEF_  "GenMsgSendType" "NOTDEF";
+BA_DEF_DEF_  "GenSigErrorValue" "NOTDEF";
+BA_DEF_DEF_  "GenSigStartValue" 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 65535;
+BA_DEF_DEF_  "GenMsgStartDelayTime" 65535;
+BA_DEF_DEF_  "GenMsgTimeoutTime" 65535;
 
-BO_ 533 Airbag: 8 Vector__XXX
- SG_ CollisionIntensity : 7|12@0+ (24.4140625,0) [0|100000] "N"  ECM_HS,BCM_HS
+BA_DEF_DEF_  "GenEnvAutoGenCtrl" "No";
+BA_DEF_DEF_  "GenEnvMsgOffset" 0;
+BA_DEF_DEF_  "GenEnvMsgName" "";
+BA_DEF_DEF_  "GenEnvIsGeneratedSnd" "No";
+BA_DEF_DEF_  "GenSigEnvVarType" "undef";
+BA_DEF_DEF_  "GenEnvVarPrefix" "Env";
+BA_DEF_DEF_  "GenEnvVarEndingSnd" "_";
+BA_DEF_DEF_  "GenEnvVarEndingDsp" "Dsp_";
 
-BO_ 534 IMU1: 8 Vector__XXX
- SG_ AccelerationX : 7|12@0+ (0.48828125,-1000) [-1000|1000] "m/s^2"  ECM_HS,BCM_HS
- SG_ AccelerationY : 23|12@0+ (0.48828125,-1000) [-1000|1000] "m/s^2"  ECM_HS,BCM_HS
- SG_ AccelerationZ : 39|12@0+ (0.48828125,-1000) [-1000|1000] "m/s^2"  ECM_HS,BCM_HS
-
-BO_ 535 IMU2: 8 Vector__XXX
- SG_ GyroscopeX : 7|12@0+ (0.48828125,-1000) [-1000|1000] "rad/s"  ECM_HS,BCM_HS
- SG_ GyroscopeY : 23|12@0+ (0.48828125,-1000) [-1000|1000] "rad/s"  ECM_HS,BCM_HS
- SG_ GyroscopeZ : 39|12@0+ (0.48828125,-1000) [-1000|1000] "rad/s"  ECM_HS,BCM_HS
-
-BO_ 536 GNSS: 8 Vector__XXX
- SG_ Latitude : 7|32@0+ (0.0000000419095158577,-90) [-90|90] "deg"  ECM_HS,BCM_HS
- SG_ Longitude : 39|32@0+ (0.00000008381903171539,-180) [-180|180] "deg"  ECM_HS,BCM_HS
-
-BA_DEF_ SG_  "SignalType" STRING ;
-BA_DEF_ SG_  "SignalLongName" STRING ;
-BA_DEF_ BO_  "GenMsgCycleTime" INT 0 10000;
-BA_DEF_DEF_  "SignalType" "";
-BA_DEF_DEF_  "SignalLongName" "";
-BA_DEF_DEF_  "GenMsgCycleTime" 0;
-BA_ "GenMsgCycleTime" BO_ 401 100;
-BA_ "GenMsgCycleTime" BO_ 381 100;
-BA_ "GenMsgCycleTime" BO_ 532 100;
-BA_ "GenMsgCycleTime" BO_ 533 100;
-BA_ "GenMsgCycleTime" BO_ 534 100;
-BA_ "GenMsgCycleTime" BO_ 535 100;
-BA_ "GenMsgCycleTime" BO_ 536 100;
-
-
+BA_ "GenMsgTimeoutTime" BO_ 1042 500;
+BA_ "GenMsgStartDelayTime" BO_ 1042 0;
+BA_ "GenMsgCycleTime" BO_ 1042 50;
+BA_ "GenMsgSendType" BO_ 1042 0;
+BA_ "GenSigMappingName" SG_ 1042 HS1_ETAT_OUVRANTS "HS1_ETAT_OUVRANTS";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_ETAT_OUVRANTS "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_ETAT_OUVRANTS 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_ETAT_OUVRANTS 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_REQ_DECON_ASR_ESP "HS1_REQ_DECON_ASR_ESP";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_REQ_DECON_ASR_ESP "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_REQ_DECON_ASR_ESP 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_REQ_DECON_ASR_ESP 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_CONTACT_FREIN1_HS "HS1_CONTACT_FREIN1_HS";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_CONTACT_FREIN1_HS "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_CONTACT_FREIN1_HS 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_CONTACT_FREIN1_HS 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_MARCHE_AR_BVM "HS1_MARCHE_AR_BVM";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_MARCHE_AR_BVM "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_MARCHE_AR_BVM 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_MARCHE_AR_BVM 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_CONTACT_FREIN_PRK "HS1_CONTACT_FREIN_PRK";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_CONTACT_FREIN_PRK "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_CONTACT_FREIN_PRK 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_CONTACT_FREIN_PRK 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_CONTACT_FREIN1 "HS1_CONTACT_FREIN1";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_CONTACT_FREIN1 "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_CONTACT_FREIN1 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_CONTACT_FREIN1 1;
+BA_ "GenMsgTimeoutTime" BO_ 1458 5000;
+BA_ "GenMsgStartDelayTime" BO_ 1458 0;
+BA_ "GenMsgCycleTime" BO_ 1458 1000;
+BA_ "GenMsgSendType" BO_ 1458 0;

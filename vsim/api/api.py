@@ -29,7 +29,7 @@ def signal(signal_name):
             }
     if request.method == 'POST':
         data = request.get_json()
-        print(data, file=sys.stderr)
+        print(f"{data}", file=sys.stderr)
         can_sim.set_sig(signal_name, data['value'])
         return {
             'signal_name': signal_name,
