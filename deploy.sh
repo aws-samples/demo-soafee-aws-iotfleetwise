@@ -13,7 +13,7 @@ popd
 docker run -d \
        -e CAN_IF=vxcan1 \
        -e FW_ENDPOINT=a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com \
-       -e VEHICLE_NAME=vin100 \
+       -e VEHICLE_NAME=vin200 \
        --mount type=bind,source=$(pwd)/private-key.key,target=/etc/aws-iot-fleetwise/private-key.key,readonly \
        --mount type=bind,source=$(pwd)/certificate.pem,target=/etc/aws-iot-fleetwise/certificate.pem,readonly \
        -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
@@ -24,16 +24,16 @@ docker run -d \
        fwe  
 echo "done"
 
-# echo -n "Starting vsim container..."
-# pushd vsim
-# docker build . -t vsim
-# popd
-# docker run -d \
-#        -e CAN_IF=vxcan0 \
-#        -p 80:3000 \
-#        --name vsim \
-#        vsim
-# echo "done"
+echo -n "Starting vsim container..."
+pushd vsim
+docker build . -t vsim
+popd
+docker run -d \
+       -e CAN_IF=vxcan0 \
+       -p 80:3000 \
+       --name vsim \
+       vsim
+echo "done"
   
 echo -n "Bringing up CAN bus..."
 DOCKERPID_FWE=$(docker inspect -f '{{ .State.Pid }}' fwe)
