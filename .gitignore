@@ -88,4 +88,5 @@ cython_debug/
 /cdk.out/
 .cdk.staging/
 !/app.py
-backend/.venv/
+/backend/.venv/
+/backend/cdk.out/
