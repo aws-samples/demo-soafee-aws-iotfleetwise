@@ -1,0 +1,3140 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.136"
+        }
+      },
+      "demo-digital-auto-backend-dev": {
+        "id": "demo-digital-auto-backend-dev",
+        "path": "demo-digital-auto-backend-dev",
+        "children": {
+          "MyRole": {
+            "id": "MyRole",
+            "path": "demo-digital-auto-backend-dev/MyRole",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/MyRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "iotfleetwise.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AdministratorAccess"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.47.0"
+            }
+          },
+          "MyDatabase": {
+            "id": "MyDatabase",
+            "path": "demo-digital-auto-backend-dev/MyDatabase",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::Timestream::Database",
+              "aws:cdk:cloudformation:props": {
+                "databaseName": "FleetWise"
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_timestream.CfnDatabase",
+              "version": "2.47.0"
+            }
+          },
+          "MyTable": {
+            "id": "MyTable",
+            "path": "demo-digital-auto-backend-dev/MyTable",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::Timestream::Table",
+              "aws:cdk:cloudformation:props": {
+                "databaseName": "FleetWise",
+                "tableName": "FleetWise"
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_timestream.CfnTable",
+              "version": "2.47.0"
+            }
+          },
+          "FwSignalCatalog": {
+            "id": "FwSignalCatalog",
+            "path": "demo-digital-auto-backend-dev/FwSignalCatalog",
+            "children": {
+              "Handler": {
+                "id": "Handler",
+                "path": "demo-digital-auto-backend-dev/FwSignalCatalog/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "IsCompleteHandler": {
+                "id": "IsCompleteHandler",
+                "path": "demo-digital-auto-backend-dev/FwSignalCatalog/IsCompleteHandler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "ServiceResource": {
+                "id": "ServiceResource",
+                "path": "demo-digital-auto-backend-dev/FwSignalCatalog/ServiceResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "demo-digital-auto-backend-dev/FwSignalCatalog/ServiceResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.47.0"
+                }
+              },
+              "ServiceCatalogHandler": {
+                "id": "ServiceCatalogHandler",
+                "path": "demo-digital-auto-backend-dev/FwSignalCatalog/ServiceCatalogHandler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "CatalogResource": {
+                "id": "CatalogResource",
+                "path": "demo-digital-auto-backend-dev/FwSignalCatalog/CatalogResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "demo-digital-auto-backend-dev/FwSignalCatalog/CatalogResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "cdk-aws-iotfleetwise.SignalCatalog",
+              "version": "0.2.12"
+            }
+          },
+          "iot-fleetwise-layer-version": {
+            "id": "iot-fleetwise-layer-version",
+            "path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version",
+            "children": {
+              "Boto3": {
+                "id": "Boto3",
+                "path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version/Boto3",
+                "children": {
+                  "Code": {
+                    "id": "Code",
+                    "path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version/Boto3/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version/Boto3/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version/Boto3/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version/Boto3/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                      "aws:cdk:cloudformation:props": {
+                        "content": {
+                          "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                          "s3Key": "70f96227ddbb8dbfac3f1733fdeaed33b6c92e507e27290f011ebba21aacf939.zip"
+                        },
+                        "compatibleRuntimes": [
+                          "python3.9"
+                        ],
+                        "description": "Boto3 Library with Iot Fleetwise Support"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "handler-role": {
+            "id": "handler-role",
+            "path": "demo-digital-auto-backend-dev/handler-role",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "demo-digital-auto-backend-dev/handler-role/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/handler-role/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          },
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AdministratorAccess"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "demo-digital-auto-backend-dev/handler-role/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/handler-role/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "iotfleetwise:*",
+                                    "iot:DescribeThing",
+                                    "iot:CreateThing",
+                                    "iot:CreateKeysAndCertificate",
+                                    "iot:DescribeEndpoint",
+                                    "iot:ListThingPrincipals",
+                                    "iot:DeleteCertificate",
+                                    "iot:DeleteThing",
+                                    "timestream:DescribeEndpoints",
+                                    "timestream:DescribeDatabase",
+                                    "timestream:DescribeTable"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": "iam:PassRole",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "MyRoleF48FFE04",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "handlerroleRoleDefaultPolicy3C992314",
+                            "roles": [
+                              {
+                                "Ref": "handlerroleRoleEEEB95D2"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "SingletonLambdaservicehandleronevent": {
+            "id": "SingletonLambdaservicehandleronevent",
+            "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                      "s3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "handlerroleRoleEEEB95D2",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "servicehandler.on_event",
+                    "layers": [
+                      {
+                        "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+                      }
+                    ],
+                    "runtime": "python3.9",
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "LogRetention": {
+                "id": "LogRetention",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/LogRetention",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/LogRetention/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                  "version": "2.47.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.47.0"
+            }
+          },
+          "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a": {
+            "id": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a",
+            "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "logs:PutRetentionPolicy",
+                                    "logs:DeleteRetentionPolicy"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+                            "roles": [
+                              {
+                                "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "SingletonLambdaservicehandleriscomplete": {
+            "id": "SingletonLambdaservicehandleriscomplete",
+            "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                      "s3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "handlerroleRoleEEEB95D2",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "servicehandler.is_complete",
+                    "layers": [
+                      {
+                        "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+                      }
+                    ],
+                    "runtime": "python3.9",
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "LogRetention": {
+                "id": "LogRetention",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/LogRetention",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/LogRetention/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                  "version": "2.47.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.47.0"
+            }
+          },
+          "servicehandler.on_event-provider": {
+            "id": "servicehandler.on_event-provider",
+            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider",
+            "children": {
+              "Provider": {
+                "id": "Provider",
+                "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdaservicehandleronevent72F0BD1E",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdaservicehandleronevent72F0BD1E",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "Action": "states:StartExecution",
+                                          "Effect": "Allow",
+                                          "Resource": {
+                                            "Ref": "servicehandleroneventproviderProviderwaiterstatemachine6F821585"
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "servicehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy6A1ADF4E",
+                                    "roles": [
+                                      {
+                                        "Ref": "servicehandleroneventproviderProviderframeworkonEventServiceRole936A4049"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "servicehandleroneventproviderProviderframeworkonEventServiceRole936A4049",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdaservicehandleronevent72F0BD1E",
+                                    "Arn"
+                                  ]
+                                },
+                                "USER_IS_COMPLETE_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                    "Arn"
+                                  ]
+                                },
+                                "WAITER_STATE_MACHINE_ARN": {
+                                  "Ref": "servicehandleroneventproviderProviderwaiterstatemachine6F821585"
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "framework-isComplete": {
+                    "id": "framework-isComplete",
+                    "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdaservicehandleronevent72F0BD1E",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdaservicehandleronevent72F0BD1E",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleDefaultPolicy240ECF7D",
+                                    "roles": [
+                                      {
+                                        "Ref": "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleE5C2FCA6"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleE5C2FCA6",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - isComplete (demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdaservicehandleronevent72F0BD1E",
+                                    "Arn"
+                                  ]
+                                },
+                                "USER_IS_COMPLETE_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.isComplete",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "framework-onTimeout": {
+                    "id": "framework-onTimeout",
+                    "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdaservicehandleronevent72F0BD1E",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdaservicehandleronevent72F0BD1E",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "servicehandleroneventproviderProviderframeworkonTimeoutServiceRoleDefaultPolicy3AF77CAC",
+                                    "roles": [
+                                      {
+                                        "Ref": "servicehandleroneventproviderProviderframeworkonTimeoutServiceRole0A52CA77"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "servicehandleroneventproviderProviderframeworkonTimeoutServiceRole0A52CA77",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - onTimeout (demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdaservicehandleronevent72F0BD1E",
+                                    "Arn"
+                                  ]
+                                },
+                                "USER_IS_COMPLETE_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onTimeout",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "waiter-state-machine": {
+                    "id": "waiter-state-machine",
+                    "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine",
+                    "children": {
+                      "Role": {
+                        "id": "Role",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Role",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Role/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "states.eu-central-1.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Role/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Role/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "servicehandleroneventproviderProviderframeworkonTimeout39AE4808",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "servicehandleroneventproviderProviderframeworkonTimeout39AE4808",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "servicehandleroneventproviderProviderwaiterstatemachineRoleDefaultPolicyCFBCFF16",
+                                    "roles": [
+                                      {
+                                        "Ref": "servicehandleroneventproviderProviderwaiterstatemachineRoleF1BEF8F3"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "constructs.Construct",
+                      "version": "10.1.136"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "SingletonLambdasignalcataloghandleronevent": {
+            "id": "SingletonLambdasignalcataloghandleronevent",
+            "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                      "s3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "handlerroleRoleEEEB95D2",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "signalcataloghandler.on_event",
+                    "layers": [
+                      {
+                        "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+                      }
+                    ],
+                    "runtime": "python3.9",
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "LogRetention": {
+                "id": "LogRetention",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/LogRetention",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/LogRetention/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                  "version": "2.47.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.47.0"
+            }
+          },
+          "signalcataloghandler.on_event-provider": {
+            "id": "signalcataloghandler.on_event-provider",
+            "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider",
+            "children": {
+              "Provider": {
+                "id": "Provider",
+                "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdasignalcataloghandleronevent4229F21D",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdasignalcataloghandleronevent4229F21D",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy3BD60236",
+                                    "roles": [
+                                      {
+                                        "Ref": "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleFC64809B"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleFC64809B",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdasignalcataloghandleronevent4229F21D",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "MyModel1": {
+            "id": "MyModel1",
+            "path": "demo-digital-auto-backend-dev/MyModel1",
+            "children": {
+              "Handler": {
+                "id": "Handler",
+                "path": "demo-digital-auto-backend-dev/MyModel1/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/MyModel1/Resource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "demo-digital-auto-backend-dev/MyModel1/Resource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "cdk-aws-iotfleetwise.VehicleModel",
+              "version": "0.2.12"
+            }
+          },
+          "SingletonLambdavehiclemodelhandleronevent": {
+            "id": "SingletonLambdavehiclemodelhandleronevent",
+            "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                      "s3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "handlerroleRoleEEEB95D2",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "vehiclemodelhandler.on_event",
+                    "layers": [
+                      {
+                        "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+                      }
+                    ],
+                    "runtime": "python3.9",
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "LogRetention": {
+                "id": "LogRetention",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/LogRetention",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/LogRetention/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                  "version": "2.47.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.47.0"
+            }
+          },
+          "vehiclemodelhandler.on_event-provider": {
+            "id": "vehiclemodelhandler.on_event-provider",
+            "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider",
+            "children": {
+              "Provider": {
+                "id": "Provider",
+                "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdavehiclemodelhandleronevent7F545ED8",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdavehiclemodelhandleronevent7F545ED8",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyA7AB4AF7",
+                                    "roles": [
+                                      {
+                                        "Ref": "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRole2E172F2E"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRole2E172F2E",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdavehiclemodelhandleronevent7F545ED8",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "vin200": {
+            "id": "vin200",
+            "path": "demo-digital-auto-backend-dev/vin200",
+            "children": {
+              "Handler": {
+                "id": "Handler",
+                "path": "demo-digital-auto-backend-dev/vin200/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/vin200/Resource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "demo-digital-auto-backend-dev/vin200/Resource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.47.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "demo-digital-auto-backend-dev/vin200/Policy",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IoT::Policy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "iot:Connect",
+                            "iot:Subscribe",
+                            "iot:Publish",
+                            "iot:Receive"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:aws:iot:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":client/vin200*"
+                                ]
+                              ]
+                            },
+                            {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:aws:iot:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":topic/*"
+                                ]
+                              ]
+                            },
+                            {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:aws:iot:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":topicfilter/*"
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "policyName": "vin200-policy"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iot.CfnPolicy",
+                  "version": "2.47.0"
+                }
+              },
+              "Attachment": {
+                "id": "Attachment",
+                "path": "demo-digital-auto-backend-dev/vin200/Attachment",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IoT::PolicyPrincipalAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "policyName": "vin200-policy",
+                    "principal": {
+                      "Fn::GetAtt": [
+                        "vin200112EC84E",
+                        "certificateArn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iot.CfnPolicyPrincipalAttachment",
+                  "version": "2.47.0"
+                }
+              },
+              "ThingAttachment": {
+                "id": "ThingAttachment",
+                "path": "demo-digital-auto-backend-dev/vin200/ThingAttachment",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IoT::ThingPrincipalAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "principal": {
+                      "Fn::GetAtt": [
+                        "vin200112EC84E",
+                        "certificateArn"
+                      ]
+                    },
+                    "thingName": "vin200"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iot.CfnThingPrincipalAttachment",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "cdk-aws-iotfleetwise.Vehicle",
+              "version": "0.2.12"
+            }
+          },
+          "SingletonLambdavehiclehandleronevent": {
+            "id": "SingletonLambdavehiclehandleronevent",
+            "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                      "s3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "handlerroleRoleEEEB95D2",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "vehiclehandler.on_event",
+                    "layers": [
+                      {
+                        "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+                      }
+                    ],
+                    "runtime": "python3.9",
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "LogRetention": {
+                "id": "LogRetention",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/LogRetention",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/LogRetention/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                  "version": "2.47.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.47.0"
+            }
+          },
+          "vehiclehandler.on_event-provider": {
+            "id": "vehiclehandler.on_event-provider",
+            "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider",
+            "children": {
+              "Provider": {
+                "id": "Provider",
+                "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdavehiclehandleronevent36CA714A",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdavehiclehandleronevent36CA714A",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyCA918FB6",
+                                    "roles": [
+                                      {
+                                        "Ref": "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleFBFDBAE0"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleFBFDBAE0",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdavehiclehandleronevent36CA714A",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "private-key": {
+            "id": "private-key",
+            "path": "demo-digital-auto-backend-dev/private-key",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.47.0"
+            }
+          },
+          "certificate": {
+            "id": "certificate",
+            "path": "demo-digital-auto-backend-dev/certificate",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.47.0"
+            }
+          },
+          "endpoint-address": {
+            "id": "endpoint-address",
+            "path": "demo-digital-auto-backend-dev/endpoint-address",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.47.0"
+            }
+          },
+          "CampaignV2001": {
+            "id": "CampaignV2001",
+            "path": "demo-digital-auto-backend-dev/CampaignV2001",
+            "children": {
+              "Handler": {
+                "id": "Handler",
+                "path": "demo-digital-auto-backend-dev/CampaignV2001/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/CampaignV2001/Resource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "demo-digital-auto-backend-dev/CampaignV2001/Resource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "cdk-aws-iotfleetwise.Campaign",
+              "version": "0.2.12"
+            }
+          },
+          "SingletonLambdacampaignhandleronevent": {
+            "id": "SingletonLambdacampaignhandleronevent",
+            "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.47.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.47.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                      "s3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "handlerroleRoleEEEB95D2",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "campaignhandler.on_event",
+                    "layers": [
+                      {
+                        "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+                      }
+                    ],
+                    "runtime": "python3.9",
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.47.0"
+                }
+              },
+              "LogRetention": {
+                "id": "LogRetention",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/LogRetention",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/LogRetention/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                  "version": "2.47.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.47.0"
+            }
+          },
+          "campaignhandler.on_event-provider": {
+            "id": "campaignhandler.on_event-provider",
+            "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider",
+            "children": {
+              "Provider": {
+                "id": "Provider",
+                "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "SingletonLambdacampaignhandleroneventAAEA2327",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "SingletonLambdacampaignhandleroneventAAEA2327",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "campaignhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyF11C0596",
+                                    "roles": [
+                                      {
+                                        "Ref": "campaignhandleroneventproviderProviderframeworkonEventServiceRole34A9DDEC"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.47.0"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.47.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+                              "s3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "campaignhandleroneventproviderProviderframeworkonEventServiceRole34A9DDEC",
+                                "Arn"
+                              ]
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "SingletonLambdacampaignhandleroneventAAEA2327",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "runtime": "nodejs14.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.47.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.47.0"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.47.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.47.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "demo-digital-auto-backend-dev/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "demo-digital-auto-backend-dev/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.47.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.136"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.47.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.47.0"
+    }
+  }
+}

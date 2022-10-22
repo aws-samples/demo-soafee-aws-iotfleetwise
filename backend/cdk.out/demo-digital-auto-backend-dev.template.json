@@ -1,0 +1,2253 @@
+{
+ "Resources": {
+  "MyRoleF48FFE04": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "iotfleetwise.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AdministratorAccess"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/MyRole/Resource"
+   }
+  },
+  "MyDatabase": {
+   "Type": "AWS::Timestream::Database",
+   "Properties": {
+    "DatabaseName": "FleetWise"
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/MyDatabase"
+   }
+  },
+  "MyTable": {
+   "Type": "AWS::Timestream::Table",
+   "Properties": {
+    "DatabaseName": "FleetWise",
+    "TableName": "FleetWise"
+   },
+   "DependsOn": [
+    "MyDatabase"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/MyTable"
+   }
+  },
+  "FwSignalCatalogServiceResourceF7FCDB95": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "servicehandleroneventproviderProviderframeworkonEventAD64D5B7",
+      "Arn"
+     ]
+    },
+    "role_arn": {
+     "Fn::GetAtt": [
+      "MyRoleF48FFE04",
+      "Arn"
+     ]
+    },
+    "database_name": "FleetWise",
+    "table_name": "FleetWise"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/FwSignalCatalog/ServiceResource/Default"
+   }
+  },
+  "FwSignalCatalogCatalogResource398DDC92": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "signalcataloghandleroneventproviderProviderframeworkonEvent446D3361",
+      "Arn"
+     ]
+    },
+    "name": "default",
+    "description": "my signal catalog",
+    "nodes": "[{\"branch\":{\"fullyQualifiedName\":\"Vehicle\",\"description\":\"Vehicle\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_ETAT_OUVRANTS\",\"dataType\":\"DOUBLE\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_REQ_DECON_ASR_ESP\",\"dataType\":\"DOUBLE\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_CONTACT_FREIN1_HS\",\"dataType\":\"DOUBLE\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_MARCHE_AR_BVM\",\"dataType\":\"DOUBLE\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_CONTACT_FREIN_PRK\",\"dataType\":\"DOUBLE\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_CONTACT_FREIN1\",\"dataType\":\"DOUBLE\"}},{\"sensor\":{\"fullyQualifiedName\":\"Vehicle.HS1_TEMP_AIR_EXT\",\"dataType\":\"DOUBLE\"}}]"
+   },
+   "DependsOn": [
+    "FwSignalCatalogServiceResourceF7FCDB95"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/FwSignalCatalog/CatalogResource/Default"
+   }
+  },
+  "iotfleetwiselayerversionBoto3F9BD5A37": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "70f96227ddbb8dbfac3f1733fdeaed33b6c92e507e27290f011ebba21aacf939.zip"
+    },
+    "CompatibleRuntimes": [
+     "python3.9"
+    ],
+    "Description": "Boto3 Library with Iot Fleetwise Support"
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/iot-fleetwise-layer-version/Boto3/Resource",
+    "aws:asset:path": "asset.70f96227ddbb8dbfac3f1733fdeaed33b6c92e507e27290f011ebba21aacf939.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "handlerroleRoleEEEB95D2": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AdministratorAccess"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/handler-role/Role/Resource"
+   }
+  },
+  "handlerroleRoleDefaultPolicy3C992314": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "iotfleetwise:*",
+        "iot:DescribeThing",
+        "iot:CreateThing",
+        "iot:CreateKeysAndCertificate",
+        "iot:DescribeEndpoint",
+        "iot:ListThingPrincipals",
+        "iot:DeleteCertificate",
+        "iot:DeleteThing",
+        "timestream:DescribeEndpoints",
+        "timestream:DescribeDatabase",
+        "timestream:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "MyRoleF48FFE04",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "handlerroleRoleDefaultPolicy3C992314",
+    "Roles": [
+     {
+      "Ref": "handlerroleRoleEEEB95D2"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/handler-role/Role/DefaultPolicy/Resource"
+   }
+  },
+  "SingletonLambdaservicehandleronevent72F0BD1E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "handlerroleRoleEEEB95D2",
+      "Arn"
+     ]
+    },
+    "Handler": "servicehandler.on_event",
+    "Layers": [
+     {
+      "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+     }
+    ],
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "handlerroleRoleDefaultPolicy3C992314",
+    "handlerroleRoleEEEB95D2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/Resource",
+    "aws:asset:path": "asset.a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdaservicehandleroneventLogRetention8E5F855A": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "SingletonLambdaservicehandleronevent72F0BD1E"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleronevent/LogRetention/Resource"
+   }
+  },
+  "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource"
+   }
+  },
+  "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:PutRetentionPolicy",
+        "logs:DeleteRetentionPolicy"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+    "Roles": [
+     {
+      "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x",
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource",
+    "aws:asset:path": "asset.eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdaservicehandleriscomplete2B1E3BBE": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "handlerroleRoleEEEB95D2",
+      "Arn"
+     ]
+    },
+    "Handler": "servicehandler.is_complete",
+    "Layers": [
+     {
+      "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+     }
+    ],
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "handlerroleRoleDefaultPolicy3C992314",
+    "handlerroleRoleEEEB95D2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/Resource",
+    "aws:asset:path": "asset.a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdaservicehandleriscompleteLogRetentionD2BD6DF8": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "SingletonLambdaservicehandleriscomplete2B1E3BBE"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdaservicehandleriscomplete/LogRetention/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonEventServiceRole936A4049": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy6A1ADF4E": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdaservicehandleronevent72F0BD1E",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdaservicehandleronevent72F0BD1E",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "servicehandleroneventproviderProviderwaiterstatemachine6F821585"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "servicehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy6A1ADF4E",
+    "Roles": [
+     {
+      "Ref": "servicehandleroneventproviderProviderframeworkonEventServiceRole936A4049"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonEventAD64D5B7": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "servicehandleroneventproviderProviderframeworkonEventServiceRole936A4049",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdaservicehandleronevent72F0BD1E",
+        "Arn"
+       ]
+      },
+      "USER_IS_COMPLETE_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+        "Arn"
+       ]
+      },
+      "WAITER_STATE_MACHINE_ARN": {
+       "Ref": "servicehandleroneventproviderProviderwaiterstatemachine6F821585"
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "servicehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy6A1ADF4E",
+    "servicehandleroneventproviderProviderframeworkonEventServiceRole936A4049"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonEventLogRetentionB3FC9528": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "servicehandleroneventproviderProviderframeworkonEventAD64D5B7"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleE5C2FCA6": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/ServiceRole/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleDefaultPolicy240ECF7D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdaservicehandleronevent72F0BD1E",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdaservicehandleronevent72F0BD1E",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleDefaultPolicy240ECF7D",
+    "Roles": [
+     {
+      "Ref": "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleE5C2FCA6"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleE5C2FCA6",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - isComplete (demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdaservicehandleronevent72F0BD1E",
+        "Arn"
+       ]
+      },
+      "USER_IS_COMPLETE_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.isComplete",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleDefaultPolicy240ECF7D",
+    "servicehandleroneventproviderProviderframeworkisCompleteServiceRoleE5C2FCA6"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkisCompleteLogRetentionED1C98D4": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-isComplete/LogRetention/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonTimeoutServiceRole0A52CA77": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/ServiceRole/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonTimeoutServiceRoleDefaultPolicy3AF77CAC": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdaservicehandleronevent72F0BD1E",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdaservicehandleronevent72F0BD1E",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "servicehandleroneventproviderProviderframeworkonTimeoutServiceRoleDefaultPolicy3AF77CAC",
+    "Roles": [
+     {
+      "Ref": "servicehandleroneventproviderProviderframeworkonTimeoutServiceRole0A52CA77"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonTimeout39AE4808": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "servicehandleroneventproviderProviderframeworkonTimeoutServiceRole0A52CA77",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - onTimeout (demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdaservicehandleronevent72F0BD1E",
+        "Arn"
+       ]
+      },
+      "USER_IS_COMPLETE_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdaservicehandleriscomplete2B1E3BBE",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onTimeout",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "servicehandleroneventproviderProviderframeworkonTimeoutServiceRoleDefaultPolicy3AF77CAC",
+    "servicehandleroneventproviderProviderframeworkonTimeoutServiceRole0A52CA77"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "servicehandleroneventproviderProviderframeworkonTimeoutLogRetention1B72B9AD": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "servicehandleroneventproviderProviderframeworkonTimeout39AE4808"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/framework-onTimeout/LogRetention/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderwaiterstatemachineRoleF1BEF8F3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.eu-central-1.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Role/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderwaiterstatemachineRoleDefaultPolicyCFBCFF16": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "servicehandleroneventproviderProviderframeworkonTimeout39AE4808",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "servicehandleroneventproviderProviderframeworkonTimeout39AE4808",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "servicehandleroneventproviderProviderwaiterstatemachineRoleDefaultPolicyCFBCFF16",
+    "Roles": [
+     {
+      "Ref": "servicehandleroneventproviderProviderwaiterstatemachineRoleF1BEF8F3"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Role/DefaultPolicy/Resource"
+   }
+  },
+  "servicehandleroneventproviderProviderwaiterstatemachine6F821585": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"framework-isComplete-task\",\"States\":{\"framework-isComplete-task\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"States.ALL\"],\"IntervalSeconds\":5,\"MaxAttempts\":360,\"BackoffRate\":1}],\"Catch\":[{\"ErrorEquals\":[\"States.ALL\"],\"Next\":\"framework-onTimeout-task\"}],\"Type\":\"Task\",\"Resource\":\"",
+       {
+        "Fn::GetAtt": [
+         "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",
+         "Arn"
+        ]
+       },
+       "\"},\"framework-onTimeout-task\":{\"End\":true,\"Type\":\"Task\",\"Resource\":\"",
+       {
+        "Fn::GetAtt": [
+         "servicehandleroneventproviderProviderframeworkonTimeout39AE4808",
+         "Arn"
+        ]
+       },
+       "\"}}}"
+      ]
+     ]
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "servicehandleroneventproviderProviderwaiterstatemachineRoleF1BEF8F3",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "servicehandleroneventproviderProviderwaiterstatemachineRoleDefaultPolicyCFBCFF16",
+    "servicehandleroneventproviderProviderwaiterstatemachineRoleF1BEF8F3"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/servicehandler.on_event-provider/Provider/waiter-state-machine/Resource"
+   }
+  },
+  "SingletonLambdasignalcataloghandleronevent4229F21D": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "handlerroleRoleEEEB95D2",
+      "Arn"
+     ]
+    },
+    "Handler": "signalcataloghandler.on_event",
+    "Layers": [
+     {
+      "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+     }
+    ],
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "handlerroleRoleDefaultPolicy3C992314",
+    "handlerroleRoleEEEB95D2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/Resource",
+    "aws:asset:path": "asset.a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdasignalcataloghandleroneventLogRetention77523A47": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "SingletonLambdasignalcataloghandleronevent4229F21D"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdasignalcataloghandleronevent/LogRetention/Resource"
+   }
+  },
+  "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleFC64809B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy3BD60236": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdasignalcataloghandleronevent4229F21D",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdasignalcataloghandleronevent4229F21D",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy3BD60236",
+    "Roles": [
+     {
+      "Ref": "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleFC64809B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "signalcataloghandleroneventproviderProviderframeworkonEvent446D3361": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleFC64809B",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdasignalcataloghandleronevent4229F21D",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy3BD60236",
+    "signalcataloghandleroneventproviderProviderframeworkonEventServiceRoleFC64809B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "signalcataloghandleroneventproviderProviderframeworkonEventLogRetention090E6375": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "signalcataloghandleroneventproviderProviderframeworkonEvent446D3361"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/signalcataloghandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource"
+   }
+  },
+  "MyModel1067AF267": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "vehiclemodelhandleroneventproviderProviderframeworkonEventDE0217FD",
+      "Arn"
+     ]
+    },
+    "name": "my_model",
+    "signal_catalog_arn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:iotfleetwise:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":signal-catalog/default"
+      ]
+     ]
+    },
+    "model_manifest_arn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:iotfleetwise:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":model-manifest/my_model"
+      ]
+     ]
+    },
+    "description": "My Model vehicle",
+    "network_interfaces": "[{\"type\":\"CAN_INTERFACE\",\"interfaceId\":\"1\",\"canInterface\":{\"name\":\"vcan0\",\"protocolName\":\"CAN\",\"protocolVersion\":\"2.0b\"}}]",
+    "signals": "{}",
+    "network_file_definitions": "[{\"canDbc\":{\"canDbcFiles\":[\"VkVSU0lPTiAiIgoKTlNfIDogCglOU19ERVNDXwoJQ01fCglCQV9ERUZfCglCQV8KCVZBTF8KCUNBVF9ERUZfCglDQVRfCglGSUxURVIKCUJBX0RFRl9ERUZfCglFVl9EQVRBXwoJRU5WVkFSX0RBVEFfCglTR1RZUEVfCglTR1RZUEVfVkFMXwoJQkFfREVGX1NHVFlQRV8KCUJBX1NHVFlQRV8KCVNJR19UWVBFX1JFRl8KCVZBTF9UQUJMRV8KCVNJR19HUk9VUF8KCVNJR19WQUxUWVBFXwoJU0lHVFlQRV9WQUxUWVBFXwoJQk9fVFhfQlVfCglCQV9ERUZfUkVMXwoJQkFfUkVMXwoJQkFfREVGX0RFRl9SRUxfCglCVV9TR19SRUxfCglCVV9FVl9SRUxfCglCVV9CT19SRUxfCglTR19NVUxfVkFMXwoKQlNfOgoKQlVfOiBVQ19GcmVpbiBVQ19DYXIgQ01NIFVDX0RpcmEgQ2FwdF9Wb2wgQlYgQUFTIEJWTVAgU0JXIEJTSSBBU1JfcGx1cyBFU00gTUREIENhcHRfQUxHIE9VVElMX0RJQUcgWENQb25DQU4gQm9zY2hfUGxhbnQgVW5rbm93biBNdWx0aXBsZU5vZGVzCgpCT18gMTA0MiBIUzFfREFUX0JTSV80MTI6IDggVUNfQ2FyCiBTR18gSFMxX0VUQVRfT1VWUkFOVFMgOiA1NXw1QDArICgxLDApIFswfDMxXSAiTk9UREVGIiBVQ19GcmVpbgogU0dfIEhTMV9SRVFfREVDT05fQVNSX0VTUCA6IDIzfDFAMCsgKDEsMCkgWzB8MV0gIk5PVERFRiIgVUNfRnJlaW4KIFNHXyBIUzFfQ09OVEFDVF9GUkVJTjFfSFMgOiAwfDFAMCsgKDEsMCkgWzB8MV0gIk5PVERFRiIgVUNfRnJlaW4KIFNHXyBIUzFfTUFSQ0hFX0FSX0JWTSA6IDJ8MUAwKyAoMSwwKSBbMHwxXSAiTk9UREVGIiBVQ19GcmVpbgogU0dfIEhTMV9DT05UQUNUX0ZSRUlOX1BSSyA6IDN8MUAwKyAoMSwwKSBbMHwxXSAiTk9UREVGIiBVQ19GcmVpbgogU0dfIEhTMV9DT05UQUNUX0ZSRUlOMSA6IDV8MUAwKyAoMSwwKSBbMHwxXSAiTk9UREVGIiBVQ19GcmVpbgogICAgICAgIApCT18gMTQ1OCBIUzFfQ09OVEVYVEVfMV81QjI6IDggQlNJCiBTR18gSFMxX1RFTVBfQUlSX0VYVCA6IDIzfDhAMCsgKDAuNSwtNDApIFstNDB8ODVdICJDIiBVQ19GcmVpbgoKQkFfREVGXyBTR18gICJHZW5TaWdNYXBwaW5nTmFtZSIgU1RSSU5HOwpCQV9ERUZfIEJPXyAgIkdlbk1zZ1NlbmRUeXBlIiBFTlVNICAiUEVSSU9ESUNBTCIsIlBFUklPRElDQUwtRVZFTlQiLCJFVkVOVCIsIk9OQ0UiLCJPTkNFLUVWRU5UIiwiTk9UREVGIjsKQkFfREVGXyBTR18gICJHZW5TaWdFcnJvclZhbHVlIiBTVFJJTkc7CkJBX0RFRl8gU0dfICAiR2VuU2lnU3RhcnRWYWx1ZSIgSU5UIDAgNjU1MzU7CkJBX0RFRl8gQk9fICAiR2VuTXNnQ3ljbGVUaW1lIiBJTlQgMCA2NTUzNTsKQkFfREVGXyBCT18gICJHZW5Nc2dTdGFydERlbGF5VGltZSIgSU5UIDAgNjU1MzU7CkJBX0RFRl8gQk9fICAiR2VuTXNnVGltZW91dFRpbWUiIElOVCAwIDY1NTM1OwoKQkFfREVGXyBFVl8gICJHZW5FbnZBdXRvR2VuQ3RybCIgRU5VTSAgIk5vIiwiWWVzIjsKQkFfREVGXyBFVl8gICJHZW5FbnZNc2dPZmZzZXQiIElOVCAwIDIxNDc0ODM2NDc7CkJBX0RFRl8gRVZfICAiR2VuRW52TXNnTmFtZSIgU1RSSU5HOwpCQV9ERUZfIEVWXyAgIkdlbkVudklzR2VuZXJhdGVkU25kIiBFTlVNICAiTm8iLCJZZXMiOwpCQV9ERUZfIFNHXyAgIkdlblNpZ0VudlZhclR5cGUiIEVOVU0gICJpbnQiLCJmbG9hdCIsInVuZGVmIjsKQkFfREVGXyAgIkdlbkVudlZhclByZWZpeCIgU1RSSU5HOwpCQV9ERUZfICAiR2VuRW52VmFyRW5kaW5nU25kIiBTVFJJTkc7CkJBX0RFRl8gICJHZW5FbnZWYXJFbmRpbmdEc3AiIFNUUklORzsKCkJBX0RFRl9ERUZfICAiR2VuU2lnTWFwcGluZ05hbWUiICJOT1RERUYiOwpCQV9ERUZfREVGXyAgIkdlbk1zZ1NlbmRUeXBlIiAiTk9UREVGIjsKQkFfREVGX0RFRl8gICJHZW5TaWdFcnJvclZhbHVlIiAiTk9UREVGIjsKQkFfREVGX0RFRl8gICJHZW5TaWdTdGFydFZhbHVlIiA2NTUzNTsKQkFfREVGX0RFRl8gICJHZW5Nc2dDeWNsZVRpbWUiIDY1NTM1OwpCQV9ERUZfREVGXyAgIkdlbk1zZ1N0YXJ0RGVsYXlUaW1lIiA2NTUzNTsKQkFfREVGX0RFRl8gICJHZW5Nc2dUaW1lb3V0VGltZSIgNjU1MzU7CgpCQV9ERUZfREVGXyAgIkdlbkVudkF1dG9HZW5DdHJsIiAiTm8iOwpCQV9ERUZfREVGXyAgIkdlbkVudk1zZ09mZnNldCIgMDsKQkFfREVGX0RFRl8gICJHZW5FbnZNc2dOYW1lIiAiIjsKQkFfREVGX0RFRl8gICJHZW5FbnZJc0dlbmVyYXRlZFNuZCIgIk5vIjsKQkFfREVGX0RFRl8gICJHZW5TaWdFbnZWYXJUeXBlIiAidW5kZWYiOwpCQV9ERUZfREVGXyAgIkdlbkVudlZhclByZWZpeCIgIkVudiI7CkJBX0RFRl9ERUZfICAiR2VuRW52VmFyRW5kaW5nU25kIiAiXyI7CkJBX0RFRl9ERUZfICAiR2VuRW52VmFyRW5kaW5nRHNwIiAiRHNwXyI7CgpCQV8gIkdlbk1zZ1RpbWVvdXRUaW1lIiBCT18gMTA0MiA1MDA7CkJBXyAiR2VuTXNnU3RhcnREZWxheVRpbWUiIEJPXyAxMDQyIDA7CkJBXyAiR2VuTXNnQ3ljbGVUaW1lIiBCT18gMTA0MiA1MDsKQkFfICJHZW5Nc2dTZW5kVHlwZSIgQk9fIDEwNDIgMDsKQkFfICJHZW5TaWdNYXBwaW5nTmFtZSIgU0dfIDEwNDIgSFMxX0VUQVRfT1VWUkFOVFMgIkhTMV9FVEFUX09VVlJBTlRTIjsKQkFfICJHZW5TaWdFcnJvclZhbHVlIiBTR18gMTA0MiBIUzFfRVRBVF9PVVZSQU5UUyAiTk9UREVGO05PVERFRiI7CkJBXyAiR2VuU2lnU3RhcnRWYWx1ZSIgU0dfIDEwNDIgSFMxX0VUQVRfT1VWUkFOVFMgMDsKQkFfICJHZW5TaWdFbnZWYXJUeXBlIiBTR18gMTA0MiBIUzFfRVRBVF9PVVZSQU5UUyAxOwpCQV8gIkdlblNpZ01hcHBpbmdOYW1lIiBTR18gMTA0MiBIUzFfUkVRX0RFQ09OX0FTUl9FU1AgIkhTMV9SRVFfREVDT05fQVNSX0VTUCI7CkJBXyAiR2VuU2lnRXJyb3JWYWx1ZSIgU0dfIDEwNDIgSFMxX1JFUV9ERUNPTl9BU1JfRVNQICJOT1RERUY7Tk9UREVGIjsKQkFfICJHZW5TaWdTdGFydFZhbHVlIiBTR18gMTA0MiBIUzFfUkVRX0RFQ09OX0FTUl9FU1AgMDsKQkFfICJHZW5TaWdFbnZWYXJUeXBlIiBTR18gMTA0MiBIUzFfUkVRX0RFQ09OX0FTUl9FU1AgMTsKQkFfICJHZW5TaWdNYXBwaW5nTmFtZSIgU0dfIDEwNDIgSFMxX0NPTlRBQ1RfRlJFSU4xX0hTICJIUzFfQ09OVEFDVF9GUkVJTjFfSFMiOwpCQV8gIkdlblNpZ0Vycm9yVmFsdWUiIFNHXyAxMDQyIEhTMV9DT05UQUNUX0ZSRUlOMV9IUyAiTk9UREVGO05PVERFRiI7CkJBXyAiR2VuU2lnU3RhcnRWYWx1ZSIgU0dfIDEwNDIgSFMxX0NPTlRBQ1RfRlJFSU4xX0hTIDA7CkJBXyAiR2VuU2lnRW52VmFyVHlwZSIgU0dfIDEwNDIgSFMxX0NPTlRBQ1RfRlJFSU4xX0hTIDE7CkJBXyAiR2VuU2lnTWFwcGluZ05hbWUiIFNHXyAxMDQyIEhTMV9NQVJDSEVfQVJfQlZNICJIUzFfTUFSQ0hFX0FSX0JWTSI7CkJBXyAiR2VuU2lnRXJyb3JWYWx1ZSIgU0dfIDEwNDIgSFMxX01BUkNIRV9BUl9CVk0gIk5PVERFRjtOT1RERUYiOwpCQV8gIkdlblNpZ1N0YXJ0VmFsdWUiIFNHXyAxMDQyIEhTMV9NQVJDSEVfQVJfQlZNIDA7CkJBXyAiR2VuU2lnRW52VmFyVHlwZSIgU0dfIDEwNDIgSFMxX01BUkNIRV9BUl9CVk0gMTsKQkFfICJHZW5TaWdNYXBwaW5nTmFtZSIgU0dfIDEwNDIgSFMxX0NPTlRBQ1RfRlJFSU5fUFJLICJIUzFfQ09OVEFDVF9GUkVJTl9QUksiOwpCQV8gIkdlblNpZ0Vycm9yVmFsdWUiIFNHXyAxMDQyIEhTMV9DT05UQUNUX0ZSRUlOX1BSSyAiTk9UREVGO05PVERFRiI7CkJBXyAiR2VuU2lnU3RhcnRWYWx1ZSIgU0dfIDEwNDIgSFMxX0NPTlRBQ1RfRlJFSU5fUFJLIDA7CkJBXyAiR2VuU2lnRW52VmFyVHlwZSIgU0dfIDEwNDIgSFMxX0NPTlRBQ1RfRlJFSU5fUFJLIDE7CkJBXyAiR2VuU2lnTWFwcGluZ05hbWUiIFNHXyAxMDQyIEhTMV9DT05UQUNUX0ZSRUlOMSAiSFMxX0NPTlRBQ1RfRlJFSU4xIjsKQkFfICJHZW5TaWdFcnJvclZhbHVlIiBTR18gMTA0MiBIUzFfQ09OVEFDVF9GUkVJTjEgIk5PVERFRjtOT1RERUYiOwpCQV8gIkdlblNpZ1N0YXJ0VmFsdWUiIFNHXyAxMDQyIEhTMV9DT05UQUNUX0ZSRUlOMSAwOwpCQV8gIkdlblNpZ0VudlZhclR5cGUiIFNHXyAxMDQyIEhTMV9DT05UQUNUX0ZSRUlOMSAxOwpCQV8gIkdlbk1zZ1RpbWVvdXRUaW1lIiBCT18gMTQ1OCA1MDAwOwpCQV8gIkdlbk1zZ1N0YXJ0RGVsYXlUaW1lIiBCT18gMTQ1OCAwOwpCQV8gIkdlbk1zZ0N5Y2xlVGltZSIgQk9fIDE0NTggMTAwMDsKQkFfICJHZW5Nc2dTZW5kVHlwZSIgQk9fIDE0NTggMDs=\"],\"networkInterface\":\"1\",\"signalsMap\":{\"HS1_ETAT_OUVRANTS\":\"Vehicle.HS1_ETAT_OUVRANTS\",\"HS1_REQ_DECON_ASR_ESP\":\"Vehicle.HS1_REQ_DECON_ASR_ESP\",\"HS1_CONTACT_FREIN1_HS\":\"Vehicle.HS1_CONTACT_FREIN1_HS\",\"HS1_MARCHE_AR_BVM\":\"Vehicle.HS1_MARCHE_AR_BVM\",\"HS1_CONTACT_FREIN_PRK\":\"Vehicle.HS1_CONTACT_FREIN_PRK\",\"HS1_CONTACT_FREIN1\":\"Vehicle.HS1_CONTACT_FREIN1\",\"HS1_TEMP_AIR_EXT\":\"Vehicle.HS1_TEMP_AIR_EXT\"}}}]"
+   },
+   "DependsOn": [
+    "FwSignalCatalogCatalogResource398DDC92",
+    "FwSignalCatalogServiceResourceF7FCDB95"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/MyModel1/Resource/Default"
+   }
+  },
+  "SingletonLambdavehiclemodelhandleronevent7F545ED8": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "handlerroleRoleEEEB95D2",
+      "Arn"
+     ]
+    },
+    "Handler": "vehiclemodelhandler.on_event",
+    "Layers": [
+     {
+      "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+     }
+    ],
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "handlerroleRoleDefaultPolicy3C992314",
+    "handlerroleRoleEEEB95D2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/Resource",
+    "aws:asset:path": "asset.a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdavehiclemodelhandleroneventLogRetentionD23E26DE": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "SingletonLambdavehiclemodelhandleronevent7F545ED8"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdavehiclemodelhandleronevent/LogRetention/Resource"
+   }
+  },
+  "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRole2E172F2E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyA7AB4AF7": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdavehiclemodelhandleronevent7F545ED8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdavehiclemodelhandleronevent7F545ED8",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyA7AB4AF7",
+    "Roles": [
+     {
+      "Ref": "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRole2E172F2E"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "vehiclemodelhandleroneventproviderProviderframeworkonEventDE0217FD": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRole2E172F2E",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdavehiclemodelhandleronevent7F545ED8",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyA7AB4AF7",
+    "vehiclemodelhandleroneventproviderProviderframeworkonEventServiceRole2E172F2E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "vehiclemodelhandleroneventproviderProviderframeworkonEventLogRetention7586A20D": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "vehiclemodelhandleroneventproviderProviderframeworkonEventDE0217FD"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclemodelhandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource"
+   }
+  },
+  "vin200112EC84E": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "vehiclehandleroneventproviderProviderframeworkonEvent97DBDC8E",
+      "Arn"
+     ]
+    },
+    "vehicle_name": "vin200",
+    "create_iot_thing": true,
+    "decoder_manifest_arn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:iotfleetwise:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":decoder-manifest/my_model"
+      ]
+     ]
+    },
+    "model_manifest_arn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:iotfleetwise:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":model-manifest/my_model"
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "MyModel1067AF267"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vin200/Resource/Default"
+   }
+  },
+  "vin200PolicyF1A8989E": {
+   "Type": "AWS::IoT::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Effect": "Allow",
+       "Action": [
+        "iot:Connect",
+        "iot:Subscribe",
+        "iot:Publish",
+        "iot:Receive"
+       ],
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:iot:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":client/vin200*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:iot:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":topic/*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:iot:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":topicfilter/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "PolicyName": "vin200-policy"
+   },
+   "DependsOn": [
+    "vin200112EC84E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vin200/Policy"
+   }
+  },
+  "vin200AttachmentD0E37BC9": {
+   "Type": "AWS::IoT::PolicyPrincipalAttachment",
+   "Properties": {
+    "PolicyName": "vin200-policy",
+    "Principal": {
+     "Fn::GetAtt": [
+      "vin200112EC84E",
+      "certificateArn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "vin200PolicyF1A8989E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vin200/Attachment"
+   }
+  },
+  "vin200ThingAttachmentB8AF0D1E": {
+   "Type": "AWS::IoT::ThingPrincipalAttachment",
+   "Properties": {
+    "Principal": {
+     "Fn::GetAtt": [
+      "vin200112EC84E",
+      "certificateArn"
+     ]
+    },
+    "ThingName": "vin200"
+   },
+   "DependsOn": [
+    "vin200AttachmentD0E37BC9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vin200/ThingAttachment"
+   }
+  },
+  "SingletonLambdavehiclehandleronevent36CA714A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "handlerroleRoleEEEB95D2",
+      "Arn"
+     ]
+    },
+    "Handler": "vehiclehandler.on_event",
+    "Layers": [
+     {
+      "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+     }
+    ],
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "handlerroleRoleDefaultPolicy3C992314",
+    "handlerroleRoleEEEB95D2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/Resource",
+    "aws:asset:path": "asset.a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdavehiclehandleroneventLogRetention238E0DBE": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "SingletonLambdavehiclehandleronevent36CA714A"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdavehiclehandleronevent/LogRetention/Resource"
+   }
+  },
+  "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleFBFDBAE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyCA918FB6": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdavehiclehandleronevent36CA714A",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdavehiclehandleronevent36CA714A",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyCA918FB6",
+    "Roles": [
+     {
+      "Ref": "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleFBFDBAE0"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "vehiclehandleroneventproviderProviderframeworkonEvent97DBDC8E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleFBFDBAE0",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdavehiclehandleronevent36CA714A",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyCA918FB6",
+    "vehiclehandleroneventproviderProviderframeworkonEventServiceRoleFBFDBAE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "vehiclehandleroneventproviderProviderframeworkonEventLogRetention5C57E90B": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "vehiclehandleroneventproviderProviderframeworkonEvent97DBDC8E"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/vehiclehandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource"
+   }
+  },
+  "CampaignV20012E6CDC0E": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "campaignhandleroneventproviderProviderframeworkonEventF0F8C6CC",
+      "Arn"
+     ]
+    },
+    "name": "FwTimeBasedCampaignV2001",
+    "signal_catalog_arn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:iotfleetwise:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":signal-catalog/default"
+      ]
+     ]
+    },
+    "target_arn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:iotfleetwise:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":vehicle/vin200"
+      ]
+     ]
+    },
+    "collection_scheme": "{\"timeBasedCollectionScheme\":{\"periodMs\":10000}}",
+    "signals_to_collect": "[{\"name\":\"Vehicle.HS1_ETAT_OUVRANTS\"},{\"name\":\"Vehicle.HS1_TEMP_AIR_EXT\"}]",
+    "auto_approve": true
+   },
+   "DependsOn": [
+    "vin200AttachmentD0E37BC9",
+    "vin200PolicyF1A8989E",
+    "vin200112EC84E",
+    "vin200ThingAttachmentB8AF0D1E"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/CampaignV2001/Resource/Default"
+   }
+  },
+  "SingletonLambdacampaignhandleroneventAAEA2327": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "handlerroleRoleEEEB95D2",
+      "Arn"
+     ]
+    },
+    "Handler": "campaignhandler.on_event",
+    "Layers": [
+     {
+      "Ref": "iotfleetwiselayerversionBoto3F9BD5A37"
+     }
+    ],
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "handlerroleRoleDefaultPolicy3C992314",
+    "handlerroleRoleEEEB95D2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/Resource",
+    "aws:asset:path": "asset.a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SingletonLambdacampaignhandleroneventLogRetention77D4DF51": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "SingletonLambdacampaignhandleroneventAAEA2327"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/SingletonLambdacampaignhandleronevent/LogRetention/Resource"
+   }
+  },
+  "campaignhandleroneventproviderProviderframeworkonEventServiceRole34A9DDEC": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "campaignhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyF11C0596": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SingletonLambdacampaignhandleroneventAAEA2327",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SingletonLambdacampaignhandleroneventAAEA2327",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "campaignhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyF11C0596",
+    "Roles": [
+     {
+      "Ref": "campaignhandleroneventproviderProviderframeworkonEventServiceRole34A9DDEC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "campaignhandleroneventproviderProviderframeworkonEventF0F8C6CC": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-642733357784-eu-central-1",
+     "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "campaignhandleroneventproviderProviderframeworkonEventServiceRole34A9DDEC",
+      "Arn"
+     ]
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "SingletonLambdacampaignhandleroneventAAEA2327",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Runtime": "nodejs14.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "campaignhandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicyF11C0596",
+    "campaignhandleroneventproviderProviderframeworkonEventServiceRole34A9DDEC"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "campaignhandleroneventproviderProviderframeworkonEventLogRetention9FC6B35D": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "campaignhandleroneventproviderProviderframeworkonEventF0F8C6CC"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/campaignhandler.on_event-provider/Provider/framework-onEvent/LogRetention/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21QTU/DMAz9LbunYTAkuO5DnCZRFcS1clPThqbJFDugqep/J0nZJBCn5/fs57z4Tt4/yPUKvqhQ7VAY3cjphUENIkr1pGGUU+UMiv27zVg6o9U50aWaBesRiT2m0SgfgKEByo5XaAzOwsDYtBAXa9sZZGefglWsnRVHOKN/Q0+JRMMvfp2KjUs9C9rUQIRMcpsgcrkLakDepUeN60geXVcho81m7Tjn+hu89NoqfQKz5fjffozjOXIfQ/7Tm2exD8RurJBc8Gq5yKXOUeLdumgWV1VlQ+1/OMnSu0/dok/e58CnwLMoz9w7e7ORt2v5uPogrQsfbDqqrBb8Bs86c4OkAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "demo-digital-auto-backend-dev/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "privatekey": {
+   "Value": {
+    "Fn::GetAtt": [
+     "vin200112EC84E",
+     "privateKey"
+    ]
+   }
+  },
+  "certificate": {
+   "Value": {
+    "Fn::GetAtt": [
+     "vin200112EC84E",
+     "certificatePem"
+    ]
+   }
+  },
+  "endpointaddress": {
+   "Value": {
+    "Fn::GetAtt": [
+     "vin200112EC84E",
+     "endpointAddress"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
