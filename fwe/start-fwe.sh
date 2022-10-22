@@ -14,9 +14,8 @@ done
 
 mkdir -p /var/aws-iot-fleetwise
 mkdir -p /etc/fwe
-cd /root/aws-iot-fleetwise-edge
-./tools/configure-fwe.sh \
-        --input-config-file configuration/static-config.json \
+/usr/bin/configure-fwe.sh \
+        --input-config-file /etc/static-config.json \
         --output-config-file /etc/aws-iot-fleetwise/config-0.json \
         --vehicle-name $VEHICLE_NAME \
         --endpoint-url $FW_ENDPOINT \

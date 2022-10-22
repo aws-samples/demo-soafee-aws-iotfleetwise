@@ -24,16 +24,16 @@ docker run -d \
        fwe  
 echo "done"
 
-echo -n "Starting vsim container..."
-pushd vsim
-docker build . -t vsim
-popd
-docker run -d \
-       -e CAN_IF=vxcan0 \
-       -p 80:3000 \
-       --name vsim \
-       vsim
-echo "done"
+# echo -n "Starting vsim container..."
+# pushd vsim
+# docker build . -t vsim
+# popd
+# docker run -d \
+#        -e CAN_IF=vxcan0 \
+#        -p 80:3000 \
+#        --name vsim \
+#        vsim
+# echo "done"
   
 echo -n "Bringing up CAN bus..."
 DOCKERPID_FWE=$(docker inspect -f '{{ .State.Pid }}' fwe)
