@@ -14,6 +14,7 @@ docker run -d \
        -e CAN_IF=vxcan1 \
        -e FW_ENDPOINT=a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com \
        -e VEHICLE_NAME=vin200 \
+       -e TRACE=off \
        --mount type=bind,source=$(pwd)/private-key.key,target=/etc/aws-iot-fleetwise/private-key.key,readonly \
        --mount type=bind,source=$(pwd)/certificate.pem,target=/etc/aws-iot-fleetwise/certificate.pem,readonly \
        -v /sys/fs/cgroup:/sys/fs/cgroup:ro \

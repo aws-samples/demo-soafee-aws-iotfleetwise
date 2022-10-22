@@ -20,8 +20,7 @@ mkdir -p /etc/fwe
         --vehicle-name $VEHICLE_NAME \
         --endpoint-url $FW_ENDPOINT \
         --can-bus0 $CAN_IF 
-#sed -i 's/Info/Trace/' /etc/aws-iot-fleetwise/config-0.json 
+[[ $TRACE == "on" ]]  && sed -i 's/Info/Trace/' /etc/aws-iot-fleetwise/config-0.json 
 cat /etc/aws-iot-fleetwise/config-0.json
 /usr/bin/aws-iot-fleetwise-edge /etc/aws-iot-fleetwise/config-0.json
-#/usr/bin/candump $CAN_IF
 
