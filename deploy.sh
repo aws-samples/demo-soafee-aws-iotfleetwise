@@ -29,6 +29,8 @@ pushd vsim
 docker build . -t vsim
 popd
 docker run -d \
+       -e CAN_IF=vxcan0 \
+       -p 80:3000 \
        --name vsim \
        vsim
 echo "done"

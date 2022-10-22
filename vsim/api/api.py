@@ -2,13 +2,14 @@ import canigen
 import time
 import datetime
 import sys
+import os
 from flask import Flask
 from flask import request
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 can_sim = canigen.canigen(
-    interface='vcan0',
+    interface=os.getenv('CAN_IF'),
     database_filename='hscan.dbc')
 
 @app.route('/')

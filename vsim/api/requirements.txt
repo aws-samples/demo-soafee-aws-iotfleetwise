@@ -1,6 +1,5 @@
-wrapt 
 cantools 
-prompt_toolkit 
 python-can 
-can-isotp 
-matplotlib
+flask
+gunicorn
+can-isotp

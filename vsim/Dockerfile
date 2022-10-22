@@ -1,4 +1,4 @@
-FROM node:16-alpine as build-step
+FROM node:18-alpine as build-step
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json yarn.lock ./
@@ -9,16 +9,20 @@ RUN yarn build
 
 # Build 
 FROM python:3.9
-RUN pip3 install --no-cache-dir --upgrade pip && \
-    pip3 install --no-cache-dir wrapt cantools prompt_toolkit python-can can-isotp matplotlib
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    git ca-certificates iproute2 && \
+    apt-get clean
+
 WORKDIR /app
 COPY --from=build-step /app/build ./build
 
 RUN mkdir ./api
-COPY api/requirements.txt api/api.py api/.flaskenv ./api
+COPY api/requirements.txt api/api.py api/.flaskenv api/canigen.py api/hscan.dbc api/start-api.sh ./api/
 RUN pip install -r ./api/requirements.txt
 ENV FLASK_ENV production
 
 EXPOSE 3000
 WORKDIR /app/api
-CMD ["gunicorn", "-b", ":3000", "api:app"]
+CMD ["/bin/bash", "start-api.sh"]
