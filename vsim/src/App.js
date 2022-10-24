@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Button, FormLabel } from 'react-bootstrap';
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import RangeSlider from 'react-bootstrap-range-slider';
 import './App.css';
 
 function App() {
@@ -67,26 +70,55 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div>
-          Left Front Door <button type="button" onClick={() => toggleDoor(FRONT_LEFT_DOOR)}>{getStateDoor(FRONT_LEFT_DOOR)}</button>
-        </div>
-        <div>
-          Right Front Door <button type="button" onClick={() => toggleDoor(FRONT_RIGHT_DOOR)}>{getStateDoor(FRONT_RIGHT_DOOR)}</button>
-        </div>
-        <div>
-          Left Rear Door <button type="button" onClick={() => toggleDoor(REAR_LEFT_DOOR)}>{getStateDoor(REAR_LEFT_DOOR)}</button>
-        </div>
-        <div>
-          Right Rear Door <button type="button" onClick={() => toggleDoor(REAR_RIGHT_DOOR)}>{getStateDoor(REAR_RIGHT_DOOR)}</button>
-        </div>
-        <div>
-          Trunk <button type="button" onClick={() => toggleDoor(TRUNK_DOOR)}>{getStateDoor(TRUNK_DOOR)}</button>
-        </div>
-        <div>
-          <button type="button" onClick={() => setTemperature(airTemperature-0.5)}>-</button>
-          {airTemperature}
-          <button type="button" onClick={() => setTemperature(airTemperature+0.5)}>+</button>
-        </div>
+
+        <table>
+            <tr>
+              <td></td>
+              <td>
+                <RangeSlider
+                  value={airTemperature}
+                  min={-40.0}
+                  max={85}
+                  size={'lg'}
+                  onChange={changeEvent => setTemperature(changeEvent.target.value)}
+                />
+                <FormLabel>Air Temperature {airTemperature} °C</FormLabel>
+              </td>
+            </tr>
+          <tr>
+            <td>
+              <tr>
+                <Button variant="secondary" onClick={() => toggleDoor(FRONT_LEFT_DOOR)}>{getStateDoor(FRONT_LEFT_DOOR)}</Button>
+              </tr>
+              <tr><span>&nbsp;</span></tr>
+              <tr><span>&nbsp;</span></tr>
+              <tr>
+                <Button variant="secondary" onClick={() => toggleDoor(REAR_LEFT_DOOR)}>{getStateDoor(REAR_LEFT_DOOR)}</Button>
+              </tr>
+            </td>
+            <img src="car.png"/>
+
+            <td>
+              <tr>
+                <Button variant="secondary" onClick={() => toggleDoor(FRONT_RIGHT_DOOR)}>{getStateDoor(FRONT_RIGHT_DOOR)}</Button>
+              </tr>
+              <tr><span>&nbsp;</span></tr>
+              <tr><span>&nbsp;</span></tr>
+              <tr>
+                <Button variant="secondary" onClick={() => toggleDoor(REAR_RIGHT_DOOR)}>{getStateDoor(REAR_RIGHT_DOOR)}</Button>
+              </tr>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <center>
+                <Button variant="secondary" onClick={() => toggleDoor(TRUNK_DOOR)}>{getStateDoor(TRUNK_DOOR)}</Button>
+              </center>
+            </td>
+          </tr>
+        </table>
       </header>
     </div>
   );

@@ -7,9 +7,9 @@ ip link delete vxcan0 > /dev/null 2>&1
 echo "done"
 
 echo -n "Building and starting fwe container..."
-pushd fwe
-docker build . -t fwe
-popd
+# pushd fwe
+# docker build . -t fwe
+# popd
 docker run -d \
        -e CAN_IF=vxcan1 \
        -e FW_ENDPOINT=a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com \
@@ -22,7 +22,7 @@ docker run -d \
        --tmpfs /run \
        --tmpfs /run/lock \
        --name fwe \
-       fwe  
+       ghcr.io/fsalamida/aws-iot-fleetwise-edge:feature-publish_container_image  
 echo "done"
 
 echo -n "Starting vsim container..."
