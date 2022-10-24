@@ -30,5 +30,6 @@ COPY --from=build-step /root/aws-iot-fleetwise-edge/tools/configure-fwe.sh /usr/
 COPY --from=build-step /root/aws-iot-fleetwise-edge/configuration/static-config.json /etc/
 
 ADD start-fwe.sh /usr/bin
+RUN chmod +x /usr/bin/start-fwe.sh
 
-CMD ["/bin/bash", "/usr/bin/start-fwe.sh"]
+CMD ["/usr/bin/start-fwe.sh"]

@@ -1,3 +1,19 @@
+#!/bin/bash
+if [[ -z "$CAN_IF" ]]; then
+    echo "Must provide CAN_IF in environment" 1>&2
+    exit 1
+fi
+
+if [[ -z "$VEHICLE_NAME" ]]; then
+    echo "Must provide VEHICLE_NAME in environment" 1>&2
+    exit 1
+fi
+
+if [[ -z "$FW_ENDPOINT" ]]; then
+    echo "Must provide FW_ENDPOINT in environment" 1>&2
+    exit 1
+fi
+
 function ifup {
     typeset output
     output=$(ip link show "$1" up) && [[ -n $output ]]
