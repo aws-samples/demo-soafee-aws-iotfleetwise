@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fwe
+  labels:
+    app: bcw-demo
+spec:
+  containers:
+  - name: fwe
+    image: ghcr.io/fsalamida/aws-iot-fleetwise-edge:feature-publish_container_image  
+    resources:
+      limits:
+        k8s.collabora.com/vcan: 1
+    env:
+    - name: CAN_IF
+      value: "vcan0"
+    - name: FW_ENDPOINT
+      value: "a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com"
+    - name: VEHICLE_NAME
+      value: "vin200"
+    - name: TRACE
+      value: "off"
