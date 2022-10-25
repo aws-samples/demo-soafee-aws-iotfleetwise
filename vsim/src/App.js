@@ -56,7 +56,7 @@ function App() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        value
+        value: parseFloat(value)
       })
     }).then(res => res.json()).then(data => {
       setAirTemperature(data.value);
@@ -82,7 +82,7 @@ function App() {
                   size={'lg'}
                   onChange={changeEvent => setTemperature(changeEvent.target.value)}
                 />
-                <FormLabel>Air Temperature {airTemperature} °C</FormLabel>
+                <FormLabel>External Air Temperature {airTemperature} °C</FormLabel>
               </td>
             </tr>
           <tr>
@@ -96,8 +96,7 @@ function App() {
                 <Button variant="secondary" onClick={() => toggleDoor(REAR_LEFT_DOOR)}>{getStateDoor(REAR_LEFT_DOOR)}</Button>
               </tr>
             </td>
-            <img src="car.png"/>
-
+              <img src="car.png"/>
             <td>
               <tr>
                 <Button variant="secondary" onClick={() => toggleDoor(FRONT_RIGHT_DOOR)}>{getStateDoor(FRONT_RIGHT_DOOR)}</Button>

@@ -81,7 +81,7 @@ BA_DEF_DEF_  "GenEnvVarEndingDsp" "Dsp_";
 
 BA_ "GenMsgTimeoutTime" BO_ 1042 500;
 BA_ "GenMsgStartDelayTime" BO_ 1042 0;
-BA_ "GenMsgCycleTime" BO_ 1042 50;
+BA_ "GenMsgCycleTime" BO_ 1042 1000;
 BA_ "GenMsgSendType" BO_ 1042 0;
 BA_ "GenSigMappingName" SG_ 1042 HS1_ETAT_OUVRANTS "HS1_ETAT_OUVRANTS";
 BA_ "GenSigErrorValue" SG_ 1042 HS1_ETAT_OUVRANTS "NOTDEF;NOTDEF";
