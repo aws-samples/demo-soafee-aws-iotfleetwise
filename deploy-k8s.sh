@@ -1,13 +1,14 @@
 #!/bin/bash
-
 kubectl delete pod fwe
-
 kubectl apply -f deploy.yml
-
-
 kubectl wait --for=condition=ready pod -l app=bcw-demo
-kubectl logs -f fwe
 
-#CID=$(kubectl get pod fwe -o jsonpath='{.status.containerStatuses[].containerID}' | tr -d containerd://)
+echo -n "Bringing up CAN bus..."
+CRICTL="crictl -r unix:///run/k3s/containerd/containerd.sock"
+PODID=$($CRICTL pods --name fwe -o json | jq -r '.items[0].id')
+PID_FWE=$($CRICTL inspectp $PODID | jq -r '.info.pid')
+nsenter -t $PID_FWE -n ip link add dev vcan0 type vcan
+nsenter -t $PID_FWE -n ip link set vcan0 up
+echo "done"
 
-#crictl inspect -o go-template --template '{{ .info.pid }}' $CID
+kubectl logs -f fwe -c fwe

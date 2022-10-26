@@ -8,9 +8,6 @@ spec:
   containers:
   - name: fwe
     image: ghcr.io/fsalamida/aws-iot-fleetwise-edge:feature-publish_container_image  
-    resources:
-      limits:
-        k8s.collabora.com/vcan: 1
     env:
     - name: CAN_IF
       value: "vcan0"
@@ -20,3 +17,27 @@ spec:
       value: "vin200"
     - name: TRACE
       value: "off"
+    volumeMounts:
+    - name: private-key
+      mountPath: "/etc/aws-iot-fleetwise/private-key.key"
+      subPath: private-key.key
+      readOnly: true
+    - name: certificate
+      mountPath: "/etc/aws-iot-fleetwise/certificate.pem"
+      subPath: certificate.pem
+      readOnly: true
+  - name: vsim
+    image: docker.io/library/vsim:latest
+    imagePullPolicy: Never
+    env:
+    - name: CAN_IF
+      value: "vcan0"
+  volumes:
+  - name: private-key
+    secret:
+      secretName: private-key
+      optional: false 
+  - name: certificate
+    secret:
+      secretName: certificate
+      optional: false 
