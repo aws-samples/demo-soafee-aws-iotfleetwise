@@ -48,12 +48,17 @@ spec:
   - name: vsim
     image: docker.io/library/vsim:latest
     imagePullPolicy: Never
-    ports:
-    - containerPort: 3000
-      protocol: TCP
     env:
     - name: CAN_IF
       value: "vcan0"
+    ports:
+    - containerPort: 3000
+      protocol: TCP
+  - name: vcan
+    image: alpine:3
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sh","-c"]
+    args: ["ip link add dev $CAN_IF type vcan && ip link set $CAN_IF up; tail -f /dev/null"]
     securityContext:
       privileged: true
       capabilities:
