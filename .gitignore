@@ -90,3 +90,4 @@ cython_debug/
 !/app.py
 /backend/.venv/
 /backend/cdk.out/
+.DS_Store
