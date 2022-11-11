@@ -31,7 +31,7 @@ class MyStack(Stack):
 
     nodes = [ifw.SignalCatalogBranch('Vehicle', 'Vehicle')]
     signals_map_my_model = {}
-    with open('../dbc/my_model.dbc') as f:
+    with open('../dbc/mymodel.dbc') as f:
       lines = f.readlines()
       for line in lines:
         found = re.search(r'^\s+SG_\s+(\w+)\s+.*', line)
@@ -48,7 +48,7 @@ class MyStack(Stack):
                                         table=table,
                                         nodes=nodes)
 
-    with open('../dbc/my_model.dbc') as f:
+    with open('../dbc/mymodel.dbc') as f:
       my_model = ifw.VehicleModel(self, 'MyModel1',
                                   signal_catalog=signal_catalog,
                                   name='my_model',
@@ -74,6 +74,6 @@ class MyStack(Stack):
                   collection_scheme=ifw.TimeBasedCollectionScheme(Duration.seconds(10)),
                   signals=[
                       ifw.CampaignSignal('Vehicle.AmbientAirTemperature'),
-                      ifw.CampaignSignal('Vehicle.DoorState'),
+                      ifw.CampaignSignal('Vehicle.DoorsState'),
                   ],
                   auto_approve=True)

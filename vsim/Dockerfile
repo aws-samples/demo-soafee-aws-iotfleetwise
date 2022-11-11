@@ -19,7 +19,7 @@ WORKDIR /app
 COPY --from=build-step /app/build ./build
 
 RUN mkdir ./api
-COPY api/requirements.txt api/api.py api/.flaskenv api/canigen.py api/hscan.dbc api/start-api.sh ./api/
+COPY api/requirements.txt api/api.py api/.flaskenv api/canigen.py api/mymodel.dbc api/start-api.sh ./api/
 RUN pip install -r ./api/requirements.txt
 ENV FLASK_ENV production
 

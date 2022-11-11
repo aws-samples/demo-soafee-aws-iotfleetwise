@@ -88,6 +88,9 @@ cython_debug/
 /cdk.out/
 .cdk.staging/
 !/app.py
-/backend/.venv/
-/backend/cdk.out/
+/cloud/.venv/
+/cloud/cdk.out/
 .DS_Store
+certificate.pem
+private-key.key
+

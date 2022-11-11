@@ -10,7 +10,7 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 can_sim = canigen.canigen(
     interface=os.getenv('CAN_IF'),
-    database_filename='../../dbc/mymodel.dbc')
+    database_filename='mymodel.dbc')
 
 @app.route('/')
 def index():
