@@ -31,7 +31,7 @@ class MyStack(Stack):
 
     nodes = [ifw.SignalCatalogBranch('Vehicle', 'Vehicle')]
     signals_map_my_model = {}
-    with open('data/my_model.dbc') as f:
+    with open('../dbc/my_model.dbc') as f:
       lines = f.readlines()
       for line in lines:
         found = re.search(r'^\s+SG_\s+(\w+)\s+.*', line)
@@ -48,7 +48,7 @@ class MyStack(Stack):
                                         table=table,
                                         nodes=nodes)
 
-    with open('data/my_model.dbc') as f:
+    with open('../dbc/my_model.dbc') as f:
       my_model = ifw.VehicleModel(self, 'MyModel1',
                                   signal_catalog=signal_catalog,
                                   name='my_model',
@@ -59,8 +59,8 @@ class MyStack(Stack):
                                       signals_map_my_model,
                                       [f.read()])])
 
-    vin100 = ifw.Vehicle(self, 'vin200',
-                          vehicle_name='vin200',
+    vin100 = ifw.Vehicle(self, 'vin100',
+                          vehicle_name='vin100',
                           vehicle_model=my_model,
                           create_iot_thing=True)
     
@@ -68,12 +68,12 @@ class MyStack(Stack):
     CfnOutput(self, 'certificate', value=vin100.certificate_pem)
     CfnOutput(self, 'endpoint-address', value=vin100.endpoint_address)
 
-    ifw.Campaign(self, 'CampaignV2001',
-                  name='FwTimeBasedCampaignV2001',
+    ifw.Campaign(self, 'MyCampaign',
+                  name='my-campaign',
                   target=vin100,
                   collection_scheme=ifw.TimeBasedCollectionScheme(Duration.seconds(10)),
                   signals=[
-                      ifw.CampaignSignal('Vehicle.HS1_ETAT_OUVRANTS'),
-                      ifw.CampaignSignal('Vehicle.HS1_TEMP_AIR_EXT'),
+                      ifw.CampaignSignal('Vehicle.AmbientAirTemperature'),
+                      ifw.CampaignSignal('Vehicle.DoorState'),
                   ],
                   auto_approve=True)
