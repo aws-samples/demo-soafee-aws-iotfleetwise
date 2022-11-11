@@ -15,14 +15,7 @@ const TopNav = () => {
         }}
         utilities={[
           {
-            // type: "menu-dropdown",
-            // type: "button",
             text: "Demo user",
-            // description: "demouser@amazon.com",
-            // iconName: "user-profile",
-            // items: [
-            //   { id: "signout", text: "Sign out" }
-            // ]
           }
         ]}
         i18nStrings={{

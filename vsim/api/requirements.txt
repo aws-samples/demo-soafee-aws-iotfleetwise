@@ -3,3 +3,4 @@ python-can
 flask
 gunicorn
 can-isotp
+python-dotenv

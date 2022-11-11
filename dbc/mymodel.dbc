@@ -33,15 +33,12 @@ BS_:
 
 BU_: 
 
-BO_ 2000 BODY: 8 Vector__XXX
- SG_ DoorsState : 55|5@0+ (1,0) [0|31] "NOTDEF" Vector__XXX
+BO_ 2000 CABIN: 8 Vector__XXX
+ SG_ DoorsState : 0|5@0+ (1,0) [0|31] "NOTDEF" Vector__XXX
   
-BO_ 2001 BODY: 8 Vector__XXX
- SG_ AmbientAirTemperature : 23|8@0+ (0.5,-40) [-40|85] "C" Vector__XXX
+BO_ 2001 ENV: 8 Vector__XXX
+ SG_ AmbientAirTemperature : 0|8@0+ (0.5,-40) [-40|85] "C" Vector__XXX
 
-BA_DEF_DEF_  "GenSigMappingName" "NOTDEF";
-BA_DEF_DEF_  "GenMsgSendType" "NOTDEF";
-BA_DEF_DEF_  "GenSigErrorValue" "NOTDEF";
 BA_DEF_ SG_  "SignalType" STRING ;
 BA_DEF_ SG_  "SignalLongName" STRING ;
 BA_DEF_ BO_  "GenMsgCycleTime" INT 0 10000;
@@ -49,16 +46,5 @@ BA_DEF_DEF_  "SignalType" "";
 BA_DEF_DEF_  "SignalLongName" "";
 BA_DEF_DEF_  "GenMsgCycleTime" 0;
 
-BA_ "GenMsgTimeoutTime" BO_ 2000 5000;
-BA_ "GenMsgStartDelayTime" BO_ 2000 0;
 BA_ "GenMsgCycleTime" BO_ 2000 1000;
-BA_ "GenMsgSendType" BO_ 2000 0;
-BA_ "GenSigMappingName" SG_ 2000 DoorsState "DoorsState";
-BA_ "GenSigErrorValue" SG_ 2000 DoorsState "NOTDEF;NOTDEF";
-BA_ "GenSigStartValue" SG_ 2000 DoorsState 0;
-BA_ "GenSigEnvVarType" SG_ 2000 DoorsState 1;
-
-BA_ "GenMsgTimeoutTime" BO_ 2001 5000;
-BA_ "GenMsgStartDelayTime" BO_ 2001 0;
 BA_ "GenMsgCycleTime" BO_ 2001 1000;
-BA_ "GenMsgSendType" BO_ 2001 0;

@@ -3,7 +3,6 @@ import "@cloudscape-design/global-styles/index.css";
 import React from 'react';
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import './App.css';
-//import FleetwiseAppLayout from './AppLayout';
 import Demo from './Demo';
 import Gallery from './Gallery';
 import TopNav from './TopNav';
@@ -14,7 +13,6 @@ function App() {
   return (
     <div className="App">
       <TopNav />
-      {/*<FleetwiseAppLayout>*/}
         <Container>
           <Tabs
             tabs={[

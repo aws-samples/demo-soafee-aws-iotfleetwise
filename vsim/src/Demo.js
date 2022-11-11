@@ -17,7 +17,7 @@ const Demo = () => {
   const TRUNK_DOOR = 0b10000;
 
   useEffect(() => {
-    fetch('/api/signal/HS1_ETAT_OUVRANTS', {
+    fetch('/api/signal/DoorsState', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -26,7 +26,7 @@ const Demo = () => {
     }).then(res => res.json()).then(data => {
       setStateDoor(data.value);
     });
-    fetch('/api/signal/HS1_TEMP_AIR_EXT', {
+    fetch('/api/signal/AmbientAirTemperature', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -38,7 +38,7 @@ const Demo = () => {
   }, []);
 
   const toggleDoor = (door) => {
-    fetch('/api/signal/HS1_ETAT_OUVRANTS', {
+    fetch('/api/signal/DoorsState', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -53,7 +53,7 @@ const Demo = () => {
   };
 
   const setTemperature = (value) => {
-    fetch('/api/signal/HS1_TEMP_AIR_EXT', {
+    fetch('/api/signal/AmbientAirTemperature', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -92,7 +92,7 @@ const Demo = () => {
           </div>
         </div>
         <div className='demo-center'>
-          <img src="car_with_logo.png" className='car' alt='car' />
+          <img src="car.png" className='car' alt='car' />
         </div>
         <div className='demo-right'>
           <div className='button-container'>
