@@ -6,10 +6,7 @@ docker rm $(docker ps -aq) > /dev/null 2>&1
 ip link delete vcan0 > /dev/null 2>&1
 echo "done"
 
-echo -n "Building and starting fwe container..."
-# pushd fwe
-# docker build . -t fwe
-# popd
+echo -n "Starting fwe container..."
 docker run -d \
        -e CAN_IF=vcan0 \
        -e FW_ENDPOINT=a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com \
@@ -22,13 +19,10 @@ docker run -d \
        --tmpfs /run \
        --tmpfs /run/lock \
        --name fwe \
-       ghcr.io/fsalamida/aws-iot-fleetwise-edge:feature-publish_container_image  
+       fwe  
 echo "done"
 
 echo -n "Starting vsim container..."
-pushd vsim
-tar -czh . | docker build -t vsim - 
-popd
 docker run -d \
        -e CAN_IF=vcan1 \
        -p 3000:3000 \
