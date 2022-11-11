@@ -9,11 +9,11 @@ echo "done"
 echo -n "Starting fwe container..."
 docker run -d \
        -e CAN_IF=vcan0 \
-       -e FW_ENDPOINT=a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com \
+       -e FW_ENDPOINT=$(jq -r '."demo-soafee-aws-iotfleetwise".endpointaddress' .tmp/cdk-outputs.json ) \
        -e VEHICLE_NAME=vin100 \
        -e TRACE=off \
-       --mount type=bind,source=$(pwd)/private-key.key,target=/etc/aws-iot-fleetwise/private-key.key,readonly \
-       --mount type=bind,source=$(pwd)/certificate.pem,target=/etc/aws-iot-fleetwise/certificate.pem,readonly \
+       --mount type=bind,source=$(pwd)/.tmp/private-key.key,target=/etc/aws-iot-fleetwise/private-key.key,readonly \
+       --mount type=bind,source=$(pwd)/.tmp/certificate.pem,target=/etc/aws-iot-fleetwise/certificate.pem,readonly \
        -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
        --tmpfs /tmp \
        --tmpfs /run \

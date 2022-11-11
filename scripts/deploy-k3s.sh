@@ -1,8 +1,8 @@
 #!/bin/bash
 
 CAN_IF=vcan0
-FW_ENDPOINT="a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com"
-VEHICLE_NAME=vin200
+FW_ENDPOINT=$(jq -r '."demo-soafee-aws-iotfleetwise".endpointaddress' .tmp/cdk-outputs.json )
+VEHICLE_NAME=vin100
 TRACE=off
 
 # Clean up
@@ -11,9 +11,8 @@ kubectl delete svc vsim-svc
 kubectl delete ingress bcw-demo
 
 # Make sure secrets are there for key and cert
-#
-# kubectl create secret generic private-key --from-file=./private-key.key
-# kubectl create secret generic certificate --from-file=./certificate.pem
+# kubectl create secret generic private-key --from-file=./.tmp/private-key.key
+# kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 
 # Deploy
 kubectl apply -f - <<EOF
@@ -26,7 +25,7 @@ metadata:
 spec:
   containers:
   - name: fwe
-    image: ghcr.io/fsalamida/aws-iot-fleetwise-edge:feature-publish_container_image  
+    image: docker.io/library/fwe:latest  
     env:
     - name: CAN_IF
       value: "$CAN_IF"
