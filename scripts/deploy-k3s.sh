@@ -1,14 +1,14 @@
 #!/bin/bash
 
 CAN_IF=vcan0
-FW_ENDPOINT=$(jq -r '."demo-soafee-aws-iotfleetwise".endpointaddress' .tmp/cdk-outputs.json )
+FW_ENDPOINT=$(cat .tmp/endpoint.txt)
 VEHICLE_NAME=vin100
 TRACE=off
 
 # Clean up
 kubectl delete pod fwe
 kubectl delete svc vsim-svc
-kubectl delete ingress bcw-demo
+kubectl delete ingress demo
 
 # Make sure secrets are there for key and cert
 # kubectl create secret generic private-key --from-file=./.tmp/private-key.key
@@ -21,7 +21,7 @@ kind: Pod
 metadata:
   name: fwe
   labels:
-    app: bcw-demo
+    app: demo
 spec:
   containers:
   - name: fwe
@@ -76,11 +76,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: bcw-demo
+    app: demo
   name: vsim-svc
 spec:
   selector:
-    app: bcw-demo
+    app: demo
   ports:
   - protocol: TCP
     port: 3000
@@ -88,7 +88,7 @@ spec:
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: bcw-demo
+  name: demo
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
@@ -103,7 +103,7 @@ spec:
                 port:
                   number: 3000
 EOF
-kubectl wait --for=condition=ready pod -l app=bcw-demo
+kubectl wait --for=condition=ready pod -l app=demo
 
 # Show log from fwe
 kubectl logs -f fwe -c fwe
