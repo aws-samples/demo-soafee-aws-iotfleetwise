@@ -3,7 +3,6 @@ import { App, Chart, ChartProps } from 'cdk8s';
 import * as kplus from 'cdk8s-plus-25';
 const fs = require('fs');
 import { VehicleSimulator } from './vsim';
-//import * as cdk8s from 'cdk8s';
 
 const CAN_IF="vcan0";
 const FW_ENDPOINT="a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com";

@@ -6,6 +6,8 @@ from aws_cdk import aws_iam as iam
 import cdk_aws_iotfleetwise as ifw
 from constructs import Construct
 
+vehicle_name = 'vin100'
+vehicle_can_interface = 'vcan0'
 
 class MyStack(Stack):
 
@@ -53,20 +55,22 @@ class MyStack(Stack):
                                   signal_catalog=signal_catalog,
                                   name='my_model',
                                   description='My Model vehicle',
-                                  network_interfaces=[ifw.CanVehicleInterface('1', 'vcan0')],
+                                  network_interfaces=[ifw.CanVehicleInterface('1', vehicle_can_interface)],
                                   network_file_definitions=[ifw.CanDefinition(
                                       '1',
                                       signals_map_my_model,
                                       [f.read()])])
 
-    vin100 = ifw.Vehicle(self, 'vin100',
-                          vehicle_name='vin100',
+    vin100 = ifw.Vehicle(self, vehicle_name,
+                          vehicle_name=vehicle_name,
                           vehicle_model=my_model,
                           create_iot_thing=True)
     
-    CfnOutput(self, 'private-key', value=vin100.private_key)
+    CfnOutput(self, 'privateKey', value=vin100.private_key)
     CfnOutput(self, 'certificate', value=vin100.certificate_pem)
-    CfnOutput(self, 'endpoint-address', value=vin100.endpoint_address)
+    CfnOutput(self, 'endpointAddress', value=vin100.endpoint_address)
+    CfnOutput(self, 'vehicleName', value=vehicle_name)
+    CfnOutput(self, 'vehicleCanInterface', value=vehicle_can_interface)
 
     ifw.Campaign(self, 'MyCampaign',
                   name='my-campaign',
