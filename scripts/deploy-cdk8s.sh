@@ -20,7 +20,7 @@ npm run build
 sudo kubectl delete all --all
 sudo kubectl apply -f dist/demo-soafee-aws-iotfleetwise.k8s.yaml
 popd
-sudo kubectl wait --for=condition=ready pod -l name=demo-soafee-aws-iotfleetwise-pod-c8c5bdf0
+sudo kubectl wait --for=condition=ready pod -l app=demo-soafee-aws-iotfleetwise
 
 # Show log from fwe
-sudo kubectl logs -f demo-soafee-aws-iotfleetwise-pod-c8c5bdf0 -c fwe
+sudo kubectl logs -f -l app=demo-soafee-aws-iotfleetwise -c fwe

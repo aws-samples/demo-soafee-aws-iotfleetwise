@@ -61,5 +61,9 @@ export class MyChart extends Chart {
 }
 
 const app = new App();
-new MyChart(app, 'demo-soafee-aws-iotfleetwise');
+new MyChart(app, 'demo-soafee-aws-iotfleetwise', {
+  labels:{
+    app: 'demo-soafee-aws-iotfleetwise'
+  }
+});
 app.synth();
