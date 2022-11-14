@@ -1,4 +1,8 @@
 #!/bin/bash
+CAN_IF=$(cat .tmp/vehicle_can_interface.txt)
+FW_ENDPOINT=$(cat .tmp/endpoint_address.txt)
+VEHICLE_NAME=$(cat .tmp/vehicle_name.txt)
+TRACE=off
 
 trap ctrl_c INT
 
@@ -8,11 +12,6 @@ function ctrl_c() {
     # Clean up
     kubectl delete all --all
 }
-
-CAN_IF=vcan0
-FW_ENDPOINT=$(cat .tmp/endpoint.txt)
-VEHICLE_NAME=vin100
-TRACE=off
 
 # Make sure secrets are there for key and cert
 # kubectl create secret generic private-key --from-file=./.tmp/private-key.key
