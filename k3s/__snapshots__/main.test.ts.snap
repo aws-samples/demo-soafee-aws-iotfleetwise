@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Placeholder Empty 1`] = `
+Array [
+  Object {
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": Object {
+      "labels": Object {
+        "cdk8s.io/metadata.addr": "test-chart-Pod-c823839a",
+      },
+      "name": "test-chart-pod-c83f3b56",
+    },
+    "spec": Object {
+      "automountServiceAccountToken": false,
+      "containers": Array [
+        Object {
+          "image": "vsim",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsGroup": 26000,
+            "runAsNonRoot": true,
+            "runAsUser": 25000,
+          },
+        },
+        Object {
+          "env": Array [
+            Object {
+              "name": "CAN_IF",
+              "value": "vcan0",
+            },
+            Object {
+              "name": "FW_ENDPOINT",
+              "value": "a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com",
+            },
+            Object {
+              "name": "VEHICLE_NAME",
+              "value": "vin100",
+            },
+            Object {
+              "name": "TRACE",
+              "value": "off",
+            },
+          ],
+          "image": "fwe:lastest",
+          "imagePullPolicy": "Always",
+          "name": "main",
+          "resources": Object {
+            "limits": Object {
+              "cpu": "1500m",
+              "memory": "2048Mi",
+            },
+            "requests": Object {
+              "cpu": "1000m",
+              "memory": "512Mi",
+            },
+          },
+          "securityContext": Object {
+            "allowPrivilegeEscalation": false,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "runAsGroup": 26000,
+            "runAsNonRoot": true,
+            "runAsUser": 25000,
+          },
+        },
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "restartPolicy": "Always",
+      "securityContext": Object {
+        "fsGroupChangePolicy": "Always",
+        "runAsNonRoot": true,
+      },
+      "setHostnameAsFQDN": false,
+    },
+  },
+]
+`;
