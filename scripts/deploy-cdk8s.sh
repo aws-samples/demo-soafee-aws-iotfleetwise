@@ -1,25 +1,28 @@
 #!/bin/bash
+export CAN_IF=$(cat .tmp/vehicle_can_interface.txt)
+export FW_ENDPOINT=$(cat .tmp/endpoint_address.txt)
+export VEHICLE_NAME=$(cat .tmp/vehicle_name.txt)
+export TRACE=off
 
-# CAN_IF=vcan0
-# FW_ENDPOINT=$(cat .tmp/endpoint.txt)
-# VEHICLE_NAME=vin100
-# TRACE=off
+trap ctrl_c INT
 
-# # Clean up
-# kubectl delete pod fwe
-# kubectl delete svc vsim-svc
-# kubectl delete ingress demo
+function ctrl_c() {
+    echo "** Trapped CTRL-C"
+    echo "cleaning up..."
+    # Clean up
+    sudo kubectl delete all --all
+    echo "done"
+}
 
 # Make sure secrets are there for key and cert
 # kubectl create secret generic private-key --from-file=./.tmp/private-key.key
 # kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 
 # Deploy
-pushd k3s
+pushd cdk8s
 npm run build
-sudo kubectl delete all --all
-sudo kubectl apply -f dist/demo-soafee-aws-iotfleetwise.k8s.yaml
 popd
+sudo kubectl apply -f cdk8s/dist/demo-soafee-aws-iotfleetwise.k8s.yaml
 sudo kubectl wait --for=condition=ready pod -l app=demo-soafee-aws-iotfleetwise
 
 # Show log from fwe

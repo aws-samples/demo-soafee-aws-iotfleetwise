@@ -4,9 +4,6 @@ import * as kplus from 'cdk8s-plus-25';
 const fs = require('fs');
 import { VehicleSimulator } from './vsim';
 
-const CAN_IF="vcan0";
-const FW_ENDPOINT="a1q6dgk6qorfqj-ats.iot.eu-central-1.amazonaws.com";
-const VEHICLE_NAME="vin100";
 
 export class MyChart extends Chart {
   constructor(scope: Construct, id: string, props: ChartProps = { }) {
@@ -29,9 +26,9 @@ export class MyChart extends Chart {
       }
         
     });
-    fwe.env.addVariable('CAN_IF', kplus.EnvValue.fromValue(CAN_IF));
-    fwe.env.addVariable('FW_ENDPOINT', kplus.EnvValue.fromValue(FW_ENDPOINT));
-    fwe.env.addVariable('VEHICLE_NAME', kplus.EnvValue.fromValue(VEHICLE_NAME));
+    fwe.env.addVariable('CAN_IF', kplus.EnvValue.fromValue(process.env.CAN_IF!));
+    fwe.env.addVariable('FW_ENDPOINT', kplus.EnvValue.fromValue(process.env.FW_ENDPOINT!));
+    fwe.env.addVariable('VEHICLE_NAME', kplus.EnvValue.fromValue(process.env.VEHICLE_NAME!));
     //fwe.env.addVariable('TRACE', kplus.EnvValue.fromValue('on'));
     fwe.mount(
       '/etc/aws-iot-fleetwise/private-key.key', 
