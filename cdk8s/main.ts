@@ -29,7 +29,7 @@ export class MyChart extends Chart {
     fwe.env.addVariable('CAN_IF', kplus.EnvValue.fromValue(process.env.CAN_IF!));
     fwe.env.addVariable('FW_ENDPOINT', kplus.EnvValue.fromValue(process.env.FW_ENDPOINT!));
     fwe.env.addVariable('VEHICLE_NAME', kplus.EnvValue.fromValue(process.env.VEHICLE_NAME!));
-    //fwe.env.addVariable('TRACE', kplus.EnvValue.fromValue('on'));
+    fwe.env.addVariable('TRACE', kplus.EnvValue.fromValue(process.env.TRACE!));
     fwe.mount(
       '/etc/aws-iot-fleetwise/private-key.key', 
       kplus.Volume.fromSecret(this, 'PrivateKeyVolume', privatekey), 
