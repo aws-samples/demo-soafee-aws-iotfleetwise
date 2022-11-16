@@ -13,7 +13,6 @@ export class MyChart extends Chart {
     const certificate = kplus.Secret.fromSecretName(this, 'Certificate', 'certificate');
     
     const pod = new kplus.Pod(this, 'Pod');
-
     const fwe = pod.addContainer({
       name: 'fwe',
       image: 'docker.io/library/fwe:latest',
@@ -47,19 +46,17 @@ export class MyChart extends Chart {
       }
     );
 
-
     if (fs.existsSync('/etc/virtual')) {
-      new VehicleSimulator(this, 'vsim', {
-        pod
-      });
+      new VehicleSimulator(this, 'vsim', { pod });        
     }
   }
 }
 
 const app = new App();
 new MyChart(app, 'demo-soafee-aws-iotfleetwise', {
-  labels:{
-    app: 'demo-soafee-aws-iotfleetwise'
-  }
+ labels:{
+   app: 'demo-soafee-aws-iotfleetwise'
+ }
 });
+
 app.synth();

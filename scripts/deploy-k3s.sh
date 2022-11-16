@@ -26,6 +26,18 @@ metadata:
   labels:
     app: demo
 spec:
+  initContainers:
+  - name: vcan
+    image: alpine:3
+    imagePullPolicy: IfNotPresent
+    command: 
+      - sh
+      - -c
+      - ip link add dev $CAN_IF type vcan && ip link set $CAN_IF up
+    securityContext:
+      privileged: true
+      capabilities:
+        add: ["CAP_NET_ADMIN"]
   containers:
   - name: fwe
     image: docker.io/library/fwe:latest
@@ -53,19 +65,10 @@ spec:
     imagePullPolicy: Never
     env:
     - name: CAN_IF
-      value: "vcan0"
+      value: "$CAN_IF"
     ports:
     - containerPort: 3000
       protocol: TCP
-  - name: vcan
-    image: alpine:3
-    imagePullPolicy: IfNotPresent
-    command: ["/bin/sh","-c"]
-    args: ["ip link add dev $CAN_IF type vcan && ip link set $CAN_IF up; tail -f /dev/null"]
-    securityContext:
-      privileged: true
-      capabilities:
-        add: ["CAP_NET_ADMIN"]
   volumes:
   - name: private-key
     secret:
