@@ -40,12 +40,12 @@ spec:
         add: ["CAP_NET_ADMIN"]
   containers:
   - name: fwe
-    image: docker.io/library/fwe:latest
-    imagePullPolicy: Never
+    image: ghcr.io/hefroy/aws-iot-fleetwise-edge:latest
+    imagePullPolicy: Always
     env:
-    - name: CAN_IF
+    - name: CAN_BUS0
       value: "$CAN_IF"
-    - name: FW_ENDPOINT
+    - name: ENDPOINT_URL
       value: "$FW_ENDPOINT"
     - name: VEHICLE_NAME
       value: "$VEHICLE_NAME"
