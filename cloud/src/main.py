@@ -14,12 +14,6 @@ class MyStack(Stack):
   def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
     super().__init__(scope, construct_id, **kwargs)
 
-    role = iam.Role(self, "MyRole",
-                    assumed_by=iam.ServicePrincipal("iotfleetwise.amazonaws.com"),
-                    managed_policies=[
-                        iam.ManagedPolicy.from_aws_managed_policy_name("AdministratorAccess")
-                    ])
-
     database_name = "FleetWise"
     table_name = "FleetWise"
     database = ts.CfnDatabase(self, "MyDatabase",
@@ -45,7 +39,6 @@ class MyStack(Stack):
 
     signal_catalog = ifw.SignalCatalog(self, "FwSignalCatalog",
                                         description='my signal catalog',
-                                        role=role,
                                         database=database,
                                         table=table,
                                         nodes=nodes)

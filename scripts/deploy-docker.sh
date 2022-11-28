@@ -1,6 +1,6 @@
 #!/bin/bash
-CAN_IF=$(cat .tmp/vehicle_can_interface.txt)
-FW_ENDPOINT=$(cat .tmp/endpoint_address.txt)
+CAN_BUS0=$(cat .tmp/vehicle_can_interface.txt)
+ENDPOINT_URL=$(cat .tmp/endpoint_address.txt)
 VEHICLE_NAME=$(cat .tmp/vehicle_name.txt)
 
 trap ctrl_c INT
@@ -12,15 +12,15 @@ function ctrl_c() {
     echo -n "Cleaning up..."
     docker kill $(docker ps -q) > /dev/null 2>&1
     docker rm $(docker ps -aq) > /dev/null 2>&1
-    ip link delete $CAN_IF > /dev/null 2>&1
+    ip link delete $CAN_BUS0 > /dev/null 2>&1
     echo "done"
 }
 
 
 echo -n "Starting fwe container..."
 docker run -d \
-       -e CAN_IF=$CAN_IF \
-       -e FW_ENDPOINT=$FW_ENDPOINT \
+       -e CAN_BUS0=$CAN_BUS0 \
+       -e ENDPOINT_URL=$ENDPOINT_URL \
        -e VEHICLE_NAME=$VEHICLE_NAME \
        -e TRACE=off \
        --mount type=bind,source=$(pwd)/.tmp/private-key.key,target=/etc/aws-iot-fleetwise/private-key.key,readonly \
@@ -30,7 +30,7 @@ docker run -d \
        --tmpfs /run \
        --tmpfs /run/lock \
        --name fwe \
-       fwe  
+       ghcr.io/hefroy/aws-iot-fleetwise-edge:latest  
 echo "done"
 
 echo -n "Starting vsim container..."
@@ -44,10 +44,10 @@ echo "done"
 echo -n "Bringing up CAN bus..."
 DOCKERPID_FWE=$(docker inspect -f '{{ .State.Pid }}' fwe)
 DOCKERPID_VSIM=$(docker inspect -f '{{ .State.Pid }}' vsim)
-ip link add $CAN_IF type vxcan peer name vcansim
-ip link set $CAN_IF netns $DOCKERPID_FWE
+ip link add $CAN_BUS0 type vxcan peer name vcansim
+ip link set $CAN_BUS0 netns $DOCKERPID_FWE
 ip link set vcansim netns $DOCKERPID_VSIM
-nsenter -t $DOCKERPID_FWE -n ip link set $CAN_IF up
+nsenter -t $DOCKERPID_FWE -n ip link set $CAN_BUS0 up
 nsenter -t $DOCKERPID_VSIM -n ip link set vcansim up
 echo "done"
 

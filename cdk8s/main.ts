@@ -15,8 +15,8 @@ export class MyChart extends Chart {
     const pod = new kplus.Pod(this, 'Pod');
     const fwe = pod.addContainer({
       name: 'fwe',
-      image: 'docker.io/library/fwe:latest',
-      imagePullPolicy: kplus.ImagePullPolicy.NEVER,
+      image: 'ghcr.io/hefroy/aws-iot-fleetwise-edge:latest',
+      imagePullPolicy: kplus.ImagePullPolicy.IF_NOT_PRESENT,
       securityContext: {
         readOnlyRootFilesystem: false,
         ensureNonRoot: false,
@@ -25,8 +25,8 @@ export class MyChart extends Chart {
       }
         
     });
-    fwe.env.addVariable('CAN_IF', kplus.EnvValue.fromValue(process.env.CAN_IF!));
-    fwe.env.addVariable('FW_ENDPOINT', kplus.EnvValue.fromValue(process.env.FW_ENDPOINT!));
+    fwe.env.addVariable('CAN_BUS0', kplus.EnvValue.fromValue(process.env.CAN_BUS0!));
+    fwe.env.addVariable('ENDPOINT_URL', kplus.EnvValue.fromValue(process.env.ENDPOINT_URL!));
     fwe.env.addVariable('VEHICLE_NAME', kplus.EnvValue.fromValue(process.env.VEHICLE_NAME!));
     fwe.env.addVariable('TRACE', kplus.EnvValue.fromValue(process.env.TRACE!));
     fwe.mount(

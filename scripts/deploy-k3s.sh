@@ -1,6 +1,6 @@
 #!/bin/bash
-CAN_IF=$(cat .tmp/vehicle_can_interface.txt)
-FW_ENDPOINT=$(cat .tmp/endpoint_address.txt)
+CAN_BUS0=$(cat .tmp/vehicle_can_interface.txt)
+ENDPOINT_URL=$(cat .tmp/endpoint_address.txt)
 VEHICLE_NAME=$(cat .tmp/vehicle_name.txt)
 TRACE=off
 
@@ -10,7 +10,7 @@ function ctrl_c() {
     echo "** Trapped CTRL-C"
     echo "cleaning up..."
     # Clean up
-    kubectl delete all --all
+    sudo kubectl delete all --all
 }
 
 # Make sure secrets are there for key and cert
@@ -18,7 +18,7 @@ function ctrl_c() {
 # kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 
 # Deploy
-kubectl apply -f - <<EOF
+sudo kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -28,12 +28,12 @@ metadata:
 spec:
   initContainers:
   - name: vcan
-    image: alpine:3
+    image: public.ecr.aws/docker/library/alpine:3
     imagePullPolicy: IfNotPresent
     command: 
       - sh
       - -c
-      - ip link add dev $CAN_IF type vcan && ip link set $CAN_IF up
+      - ip link add dev $CAN_BUS0 type vcan && ip link set $CAN_BUS0 up
     securityContext:
       privileged: true
       capabilities:
@@ -44,9 +44,9 @@ spec:
     imagePullPolicy: Always
     env:
     - name: CAN_BUS0
-      value: "$CAN_IF"
+      value: "$CAN_BUS0"
     - name: ENDPOINT_URL
-      value: "$FW_ENDPOINT"
+      value: "$ENDPOINT_URL"
     - name: VEHICLE_NAME
       value: "$VEHICLE_NAME"
     - name: TRACE
@@ -65,7 +65,7 @@ spec:
     imagePullPolicy: Never
     env:
     - name: CAN_IF
-      value: "$CAN_IF"
+      value: "$CAN_BUS0"
     ports:
     - containerPort: 3000
       protocol: TCP
@@ -110,7 +110,7 @@ spec:
                 port:
                   number: 3000
 EOF
-kubectl wait --for=condition=ready pod -l app=demo
+sudo kubectl wait --for=condition=ready pod -l app=demo
 
 # Show log from fwe
-kubectl logs -f fwe -c fwe
+sudo kubectl logs -f fwe -c fwe

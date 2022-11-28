@@ -12,9 +12,9 @@ export class VehicleSimulator extends Construct {
 
     props.pod.addContainer({
       name: 'signalmesh',
-      image: 'docker.io/library/alpine:3',
+      image: 'public.ecr.aws/docker/library/alpine:3',
       command: ["/bin/sh","-c"],
-      args: [`ip link add dev ${process.env.CAN_IF!} type vcan && ip link set ${process.env.CAN_IF!} up; tail -f /dev/null`],
+      args: [`ip link add dev ${process.env.CAN_BUS0!} type vcan && ip link set ${process.env.CAN_BUS0!} up; tail -f /dev/null`],
       securityContext: {
         privileged: true,
         allowPrivilegeEscalation: true,
@@ -36,7 +36,7 @@ export class VehicleSimulator extends Construct {
       }
     });
     vsim.addPort({ number: 3000 });
-    vsim.env.addVariable('CAN_IF', kplus.EnvValue.fromValue(process.env.CAN_IF!));
+    vsim.env.addVariable('CAN_IF', kplus.EnvValue.fromValue(process.env.CAN_BUS0!));
 
     const ui = new kplus.Service(this, 'UI', {
       type: kplus.ServiceType.NODE_PORT

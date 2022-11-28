@@ -1,6 +1,6 @@
 #!/bin/bash
-export CAN_IF=$(cat .tmp/vehicle_can_interface.txt)
-export FW_ENDPOINT=$(cat .tmp/endpoint_address.txt)
+export CAN_BUS0=$(cat .tmp/vehicle_can_interface.txt)
+export ENDPOINT_URL=$(cat .tmp/endpoint_address.txt)
 export VEHICLE_NAME=$(cat .tmp/vehicle_name.txt)
 export TRACE=off
 

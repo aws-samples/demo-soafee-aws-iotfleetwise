@@ -2,9 +2,7 @@ import React from 'react';
 import SimpleImageSlider from "react-simple-image-slider";
 
 const images = [
-  { url: "Slide1.jpeg" },
-  { url: "Slide2.jpeg" },
-  { url: "Slide3.jpeg" },
+  { url: "Slide1.jpg" },
 ];
 
 const Gallery = () => {
