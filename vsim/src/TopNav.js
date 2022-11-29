@@ -7,11 +7,7 @@ const TopNav = () => {
       <TopNavigation
         identity={{
           href: "#",
-          title: "",
-          logo: {
-            src: "aws_logo.png",
-            alt: "Service"
-          }
+          title: ""
         }}
         utilities={[
           {
