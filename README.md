@@ -6,7 +6,7 @@ The demo will walk you through the exercise of running on [EWAOL](https://github
 
 > TODO: Add Architecture
 
-> :warning: **At the time of writing, AWS Iot FleetWise is only available in preview only in us-east-1 and eu-central-1 so be sure to use one of the mentioned region to run the demo on**
+> :warning: **At the time of writing, AWS Iot FleetWise is available only in us-east-1 and eu-central-1, so be sure to use one of the mentioned regions**
 
 ## Getting started
 
