@@ -1,0 +1,113 @@
+VERSION ""
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: UC_Frein UC_Car CMM UC_Dira Capt_Vol BV AAS BVMP SBW BSI ASR_plus ESM MDD Capt_ALG OUTIL_DIAG XCPonCAN Bosch_Plant Unknown MultipleNodes
+
+BO_ 1042 HS1_DAT_BSI_412: 8 UC_Car
+ SG_ HS1_ETAT_OUVRANTS : 55|5@0+ (1,0) [0|31] "NOTDEF" UC_Frein
+ SG_ HS1_REQ_DECON_ASR_ESP : 23|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_CONTACT_FREIN1_HS : 0|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_MARCHE_AR_BVM : 2|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_CONTACT_FREIN_PRK : 3|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+ SG_ HS1_CONTACT_FREIN1 : 5|1@0+ (1,0) [0|1] "NOTDEF" UC_Frein
+        
+BO_ 1458 HS1_CONTEXTE_1_5B2: 8 BSI
+ SG_ HS1_TEMP_AIR_EXT : 23|8@0+ (0.5,-40) [-40|85] "C" UC_Frein
+
+BA_DEF_ SG_  "GenSigMappingName" STRING;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "PERIODICAL","PERIODICAL-EVENT","EVENT","ONCE","ONCE-EVENT","NOTDEF";
+BA_DEF_ SG_  "GenSigErrorValue" STRING;
+BA_DEF_ SG_  "GenSigStartValue" INT 0 65535;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgTimeoutTime" INT 0 65535;
+
+BA_DEF_ EV_  "GenEnvAutoGenCtrl" ENUM  "No","Yes";
+BA_DEF_ EV_  "GenEnvMsgOffset" INT 0 2147483647;
+BA_DEF_ EV_  "GenEnvMsgName" STRING;
+BA_DEF_ EV_  "GenEnvIsGeneratedSnd" ENUM  "No","Yes";
+BA_DEF_ SG_  "GenSigEnvVarType" ENUM  "int","float","undef";
+BA_DEF_  "GenEnvVarPrefix" STRING;
+BA_DEF_  "GenEnvVarEndingSnd" STRING;
+BA_DEF_  "GenEnvVarEndingDsp" STRING;
+
+BA_DEF_DEF_  "GenSigMappingName" "NOTDEF";
+BA_DEF_DEF_  "GenMsgSendType" "NOTDEF";
+BA_DEF_DEF_  "GenSigErrorValue" "NOTDEF";
+BA_DEF_DEF_  "GenSigStartValue" 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 65535;
+BA_DEF_DEF_  "GenMsgStartDelayTime" 65535;
+BA_DEF_DEF_  "GenMsgTimeoutTime" 65535;
+
+BA_DEF_DEF_  "GenEnvAutoGenCtrl" "No";
+BA_DEF_DEF_  "GenEnvMsgOffset" 0;
+BA_DEF_DEF_  "GenEnvMsgName" "";
+BA_DEF_DEF_  "GenEnvIsGeneratedSnd" "No";
+BA_DEF_DEF_  "GenSigEnvVarType" "undef";
+BA_DEF_DEF_  "GenEnvVarPrefix" "Env";
+BA_DEF_DEF_  "GenEnvVarEndingSnd" "_";
+BA_DEF_DEF_  "GenEnvVarEndingDsp" "Dsp_";
+
+BA_ "GenMsgTimeoutTime" BO_ 1042 500;
+BA_ "GenMsgStartDelayTime" BO_ 1042 0;
+BA_ "GenMsgCycleTime" BO_ 1042 50;
+BA_ "GenMsgSendType" BO_ 1042 0;
+BA_ "GenSigMappingName" SG_ 1042 HS1_ETAT_OUVRANTS "HS1_ETAT_OUVRANTS";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_ETAT_OUVRANTS "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_ETAT_OUVRANTS 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_ETAT_OUVRANTS 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_REQ_DECON_ASR_ESP "HS1_REQ_DECON_ASR_ESP";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_REQ_DECON_ASR_ESP "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_REQ_DECON_ASR_ESP 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_REQ_DECON_ASR_ESP 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_CONTACT_FREIN1_HS "HS1_CONTACT_FREIN1_HS";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_CONTACT_FREIN1_HS "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_CONTACT_FREIN1_HS 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_CONTACT_FREIN1_HS 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_MARCHE_AR_BVM "HS1_MARCHE_AR_BVM";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_MARCHE_AR_BVM "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_MARCHE_AR_BVM 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_MARCHE_AR_BVM 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_CONTACT_FREIN_PRK "HS1_CONTACT_FREIN_PRK";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_CONTACT_FREIN_PRK "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_CONTACT_FREIN_PRK 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_CONTACT_FREIN_PRK 1;
+BA_ "GenSigMappingName" SG_ 1042 HS1_CONTACT_FREIN1 "HS1_CONTACT_FREIN1";
+BA_ "GenSigErrorValue" SG_ 1042 HS1_CONTACT_FREIN1 "NOTDEF;NOTDEF";
+BA_ "GenSigStartValue" SG_ 1042 HS1_CONTACT_FREIN1 0;
+BA_ "GenSigEnvVarType" SG_ 1042 HS1_CONTACT_FREIN1 1;
+BA_ "GenMsgTimeoutTime" BO_ 1458 5000;
+BA_ "GenMsgStartDelayTime" BO_ 1458 0;
+BA_ "GenMsgCycleTime" BO_ 1458 1000;
+BA_ "GenMsgSendType" BO_ 1458 0;

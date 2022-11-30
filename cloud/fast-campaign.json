@@ -1,0 +1,30 @@
+{
+    "name": "fast-campaign",
+    "targetArn": "arn:aws:iotfleetwise:eu-central-1:642733357784:vehicle/vin200",
+    "signalCatalogArn": "arn:aws:iotfleetwise:eu-central-1:642733357784:signal-catalog/default",
+    "collectionScheme": {
+        "conditionBasedCollectionScheme": {
+            "conditionLanguageVersion": 1,
+            "expression": "true",
+            "minimumTriggerIntervalMs": 1000,
+            "triggerMode": "ALWAYS"
+        }
+    },
+    "compression": "SNAPPY",
+    "diagnosticsMode": "OFF",
+    "postTriggerCollectionDuration": 1000,
+    "priority": 0,
+    "signalsToCollect": [
+        {
+            "maxSampleCount": 100,
+            "minimumSamplingIntervalMs": 0,
+            "name": "Vehicle.HS1_TEMP_AIR_EXT"
+        },
+        {
+            "maxSampleCount": 100,
+            "minimumSamplingIntervalMs": 0,
+            "name": "Vehicle.HS1_ETAT_OUVRANTS"
+        }
+    ],
+    "spoolingMode": "TO_DISK"
+}

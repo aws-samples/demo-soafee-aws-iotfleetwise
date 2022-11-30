@@ -1,0 +1,42 @@
+.app-nav {
+  position: sticky;
+  top: 0; 
+  z-index: 1002;
+}
+
+.demo-content {
+  min-height: calc(100vh - 310px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-container .button-container {
+  display: flex;
+  height: calc(100vh - 800px);
+  max-height: 250px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.car {
+  height: calc(100vh - 350px);
+}
+
+.bottom {
+  margin-top: 20px
+}
+
