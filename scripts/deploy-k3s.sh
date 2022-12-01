@@ -70,6 +70,7 @@ spec:
       value: "$CAN_BUS0"
     ports:
     - containerPort: 3000
+      hostPort: 8080
       protocol: TCP
   volumes:
   - name: private-key
@@ -80,37 +81,6 @@ spec:
     secret:
       secretName: certificate
       optional: false 
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: demo
-  name: vsim-svc
-spec:
-  selector:
-    app: demo
-  ports:
-  - protocol: TCP
-    port: 3000
----
-kind: Ingress
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: demo
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: vsim-svc
-                port:
-                  number: 3000
 EOF
 sudo kubectl wait --for=condition=ready pod -l app=demo
 
