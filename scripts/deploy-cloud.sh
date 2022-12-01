@@ -1,7 +1,8 @@
 #!/bin/bash
+set -e
 sudo apt-get -y update
-sudo apt-get -y install jq gettext bash-completion moreutils
-sudo apt-get -y install python3.8 python3.8-dev python3.8-distutils python3.8-venv
+sudo apt-get -y install jq gettext bash-completion moreutils linux-modules-extra-$(uname -r) \
+                        python3.8 python3.8-dev python3.8-distutils python3.8-venv
 export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a /home/ubuntu/.bash_profile
