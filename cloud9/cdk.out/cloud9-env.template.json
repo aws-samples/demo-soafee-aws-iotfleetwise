@@ -1,0 +1,465 @@
+{
+ "Parameters": {
+  "EETeamRoleArn": {
+   "Type": "String",
+   "Default": ""
+  }
+ },
+ "Conditions": {
+  "EeTeamRoleArnCondition": {
+   "Fn::Equals": [
+    {
+     "Ref": "EETeamRoleArn"
+    },
+    ""
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "MyCfnEnvironmentEC2": {
+   "Type": "AWS::Cloud9::EnvironmentEC2",
+   "Properties": {
+    "InstanceType": "m4.large",
+    "AutomaticStopTimeMinutes": 120,
+    "Description": "Workshop Cloud9",
+    "ImageId": "amazonlinux-2-x86_64",
+    "Name": "Workshop Cloud9",
+    "OwnerArn": {
+     "Fn::If": [
+      "EeTeamRoleArnCondition",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "Fn::Join": [
+        "",
+        [
+         "arn:aws:sts::",
+         {
+          "Ref": "AWS::AccountId"
+         },
+         ":assumed-role/TeamRole/MasterKey"
+        ]
+       ]
+      }
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "SSMBootstrap",
+      "Value": "Active"
+     }
+    ]
+   },
+   "DependsOn": [
+    "SsmDocBootstrapC9Association"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/MyCfnEnvironmentEC2"
+   }
+  },
+  "SsmDocBootstrapC9": {
+   "Type": "AWS::SSM::Document",
+   "Properties": {
+    "Content": {
+     "schemaVersion": "2.2",
+     "description": "Bootstrap Cloud9",
+     "mainSteps": [
+      {
+       "name": "BootstrapCloud9",
+       "action": "aws:runShellScript",
+       "inputs": {
+        "runCommand": [
+         "#!/bin/bash",
+         "echo LANG=en_US.utf-8 >> /etc/environment",
+         "echo LC_ALL=en_US.UTF-8 >> /etc/environment",
+         "yum -y install jq gettext bash-completion moreutils",
+         "export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)",
+         "export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')",
+         "sudo -u ec2-user bash  << EOF",
+         ". /home/ec2-user/.bash_profile",
+         "echo \"export ACCOUNT_ID=${ACCOUNT_ID}\" | tee -a /home/ec2-user/.bash_profile",
+         "echo \"export AWS_REGION=${AWS_REGION}\" | tee -a /home/ec2-user/.bash_profile",
+         "aws configure set default.region ${AWS_REGION}",
+         "aws configure set default.account ${ACCOUNT_ID}",
+         "cd /home/ec2-user/environment",
+         "git config --global core.autocrlf false",
+         "git clone https://github.com/aws-samples/demo-soafee-aws-iofleetwise.git",
+         "cdk bootstrap aws://${ACCOUNT_ID}/${AWS_REGION}",
+         "EOF"
+        ]
+       }
+      }
+     ]
+    },
+    "DocumentType": "Command",
+    "Name": "BootstrapC9"
+   },
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/SsmDocBootstrapC9"
+   }
+  },
+  "SsmDocBootstrapC9Association": {
+   "Type": "AWS::SSM::Association",
+   "Properties": {
+    "Name": {
+     "Ref": "SsmDocBootstrapC9"
+    },
+    "Targets": [
+     {
+      "Key": "tag:SSMBootstrap",
+      "Values": [
+       "Active"
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/SsmDocBootstrapC9Association"
+   }
+  },
+  "LambdaRole3A44B857": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AdministratorAccess"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/LambdaRole/Resource"
+   }
+  },
+  "SetInstanceProfileLambda2550048B": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "from __future__ import print_function\nimport boto3\nimport json\nimport os\nimport time\nimport traceback\nimport cfnresponse\n\ndef on_event(event, context):\n    print('event: {}'.format(event))\n    print('context: {}'.format(context))\n    responseData = {}\n\n    if event['RequestType'] == 'Create':\n        try:\n            # Open AWS clients\n            ec2 = boto3.client('ec2')\n\n            # Get the InstanceId of the Cloud9 IDE\n            print(ec2.describe_instances(Filters=[{'Name': 'tag:SSMBootstrap','Values': ['Active']}]))\n            instance = ec2.describe_instances(\n                    Filters=[\n                        {'Name': 'tag:SSMBootstrap','Values': ['Active']},\n                        {'Name': 'instance-state-name','Values': ['pending', 'running']}\n                    ]\n                )['Reservations'][0]['Instances'][0]\n            print('instance: {}'.format(instance))\n\n            # Create the IamInstanceProfile request object\n            iam_instance_profile = {\n                'Arn': event['ResourceProperties']['InstanceProfileArn'],\n                'Name': event['ResourceProperties']['InstanceProfileName']\n            }\n            print('iam_instance_profile: {}'.format(iam_instance_profile))\n\n            # Wait for Instance to become ready before adding Role\n            instance_state = instance['State']['Name']\n            print('instance_state: {}'.format(instance_state))\n            while instance_state != 'running':\n                time.sleep(5)\n                instance_state = ec2.describe_instances(InstanceIds=[instance['InstanceId']])\n                print('instance_state: {}'.format(instance_state))\n\n            # attach instance profile\n            response = ec2.associate_iam_instance_profile(IamInstanceProfile=iam_instance_profile, InstanceId=instance['InstanceId'])\n            print('response - associate_iam_instance_profile: {}'.format(response))\n\n            responseData = {'Success': 'Started bootstrapping for instance: '+instance['InstanceId']}\n            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData, 'CustomResourcePhysicalID')\n            \n        except Exception as e:\n            print(e)\n            responseData = {'Error': 'error'}\n            cfnresponse.send(event, context, cfnresponse.FAILED, responseData, 'CustomResourcePhysicalID')\n    else:\n        cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData, 'CustomResourcePhysicalID')\n"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "LambdaRole3A44B857",
+      "Arn"
+     ]
+    },
+    "Handler": "index.on_event",
+    "Runtime": "python3.9",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "LambdaRole3A44B857"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/SetInstanceProfileLambda/Resource"
+   }
+  },
+  "C9Role514A80AE": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AdministratorAccess"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/C9Role/Resource"
+   }
+  },
+  "C9InstanceProfile": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "C9Role514A80AE"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/C9InstanceProfile"
+   }
+  },
+  "SetInstanceProfileResource": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "SetInstanceProfileLambda2550048B",
+      "Arn"
+     ]
+    },
+    "InstanceProfileArn": {
+     "Fn::GetAtt": [
+      "C9InstanceProfile",
+      "Arn"
+     ]
+    },
+    "InstanceProfileName": {
+     "Ref": "C9InstanceProfile"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/SetInstanceProfileResource/Default"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0VNzU7DMAx+lt1Tsw4hwXEqm7RbVR4AeWmmmSa2FCcgVOXdSYBpp+/f3sFTD/0Gv7Sz89J5OsP6ltAuZrjwiBGDSy42MQjPlEjY1PL7ar3k+QVqcOBPisLBcToMO6MaYK32q9jcvLbdq4olbOtiCGthEu9acsMTa0K2boxyIe+K8RjOM8J6zGx/v9bSjZdiJqeSo63brEnCXdaT/7yY8TtdhR8eod/C8+ZDibqYOVFwMP3hD1uKZDX/AAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "cloud9-env/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ }
+}

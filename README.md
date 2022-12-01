@@ -1,6 +1,8 @@
+> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
+
 # Welcome to the SOAFEE AWS IoT Fleetwise demo
 
-The repository contains the artifacts and code that allows you to reproduce the demo shown in the session [**Achieving environmental parity through multiple layers of abstractions helps to support AWS IoT FleeWise edge on EWAOL**](https://www.youtube.com/watch?v=Wd1isAmTtp8) at [SOAFEE Virtual Symposium 2022](https://soafee.io/blog/2022/virtual_symposium/).
+The repository contains the instructions and code that allows you to reproduce the demo shown in the session [**Achieving environmental parity through multiple layers of abstractions helps to support AWS IoT FleeWise edge on EWAOL**](https://www.youtube.com/watch?v=Wd1isAmTtp8) at [SOAFEE Virtual Symposium 2022](https://soafee.io/blog/2022/virtual_symposium/).
 
 The demo will walk you through the exercise of running on [EWAOL](https://github.com/aws4embeddedlinux/meta-aws-ewaol) the [AWS IoT FleeWise](https://aws.amazon.com/iot-fleetwise/) Edge. The [AWS IoT FleeWise Edge](https://github.com/aws/aws-iot-fleetwise-edge) will run in a container and the orchestration will be done with [k3s](https://k3s.io/). We can use the exact same container image both in the cloud and on a physical target, as long as they are based on an ARM v8 core. We also show how the [cdk8s](https://cdk8s.io/) framework can improve the software development process abstracting the orchestration layer.
 
@@ -10,24 +12,8 @@ The demo will walk you through the exercise of running on [EWAOL](https://github
 
 ## Getting started
 
-Create Build Host based on AWS Graviton and access to it via ssh.
+Deploy Cloud 9 either in [us-east-1](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=demo-soafee-aws-iotfleetwise&templateURL=https://raw.githubusercontent.com/aws-samples/demo-soafee-aws-iotfleetwise/main/cloud9/cdk.out/cloud9-env.template.json) or [eu-central-1](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=demo-soafee-aws-iotfleetwise&templateURL=https://raw.githubusercontent.com/aws-samples/demo-soafee-aws-iotfleetwise/main/cloud9/cdk.out/cloud9-env.template.json)
 
-> TODO: provide a one click deployment for an EC2 with with a minimum of 100G storage if you want to build an EWAOL Image and admin role
-
-Clone this repository
-
-```sh
-git clone https://github.com/aws-samples/demo-soafee-aws-iotfleetwise
-cd demo-soafee-aws-iotfleetwise
-```
-
-Install and bootstrap cdk
-
-```sh
-npm install -g aws-cdk
-npx cdk bootstrap --cloudformation-execution-policies \
-  arn:aws:iam::aws:policy/AdministratorAccess 
-```
 
 Run the following script to deploy the cdk stack that will deploy all the cloud resources as shown on the architeture above.
 

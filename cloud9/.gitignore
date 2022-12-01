@@ -1,0 +1,8 @@
+*.swp
+package-lock.json
+__pycache__
+.pytest_cache
+.venv
+*.egg-info
+cdk.out/manifest.json
+cdk.out/tree.json
