@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 CAN_BUS0=$(cat .tmp/vehicle_can_interface.txt)
 ENDPOINT_URL=$(cat .tmp/endpoint_address.txt)
 VEHICLE_NAME=$(cat .tmp/vehicle_name.txt)
@@ -18,6 +19,7 @@ function ctrl_c() {
 # kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 
 # Deploy
+modprobe vcan
 sudo kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
