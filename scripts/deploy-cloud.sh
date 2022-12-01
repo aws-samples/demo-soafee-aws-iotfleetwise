@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo yum -y install jq gettext bash-completion moreutils
+sudo apt-get -y install jq gettext bash-completion moreutils
 export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a /home/ec2-user/.bash_profile
