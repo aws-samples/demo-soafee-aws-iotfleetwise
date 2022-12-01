@@ -19,56 +19,14 @@ class MainStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        ee_team_role_arn = CfnParameter(self, 'EETeamRoleArn',
-            default=''
-        )
-
-        CfnCondition(self, 'EeTeamRoleArnCondition', 
-            expression=Fn.condition_equals(ee_team_role_arn.value_as_string, '')
-        )
-
-        owner_arn = Fn.condition_if('EeTeamRoleArnCondition', 
-            Aws.NO_VALUE,
-            'arn:aws:sts::{}:assumed-role/TeamRole/MasterKey'.format(Aws.ACCOUNT_ID)
-        )
-
         c9 = cloud9.CfnEnvironmentEC2(self,'MyCfnEnvironmentEC2',
             instance_type='m4.large',
             automatic_stop_time_minutes=120,
             image_id='amazonlinux-2-x86_64',
-            name='Workshop Cloud9',
-            description='Workshop Cloud9',
-            owner_arn=owner_arn.to_string(),
+            name='Demo SOAFEE AWS IoT Fleetwise',
+            description='Demo SOAFEE AWS IoT Fleetwise',
             tags=[CfnTag(key='SSMBootstrap', value='Active')]
         )
-
-        with open(os.path.join(os.path.dirname(__file__), 'script.sh'), encoding='utf8') as fp:
-            script = fp.read().splitlines()
-
-        doc=ssm.CfnDocument(self, 'SsmDocBootstrapC9',
-            name='BootstrapC9',
-            document_type='Command',
-            content={
-                'schemaVersion': '2.2',
-                'description': 'Bootstrap Cloud9',
-                'mainSteps': [{
-                    'name': 'BootstrapCloud9',
-                    'action': 'aws:runShellScript',
-                    'inputs': {
-                        'runCommand': script
-                    }
-                }]
-            }
-        )
-
-        association = ssm.CfnAssociation(self, 'SsmDocBootstrapC9Association',
-            name=doc.ref,
-            targets=[ssm.CfnAssociation.TargetProperty(
-                key='tag:SSMBootstrap',
-                values=['Active']
-            )],
-        )
-        c9.node.add_dependency(association)
 
         lambda_role = iam.Role(self, 'LambdaRole',
             assumed_by =iam.ServicePrincipal('lambda.amazonaws.com'),

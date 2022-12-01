@@ -12,10 +12,13 @@ The demo will walk you through the exercise of running on [EWAOL](https://github
 
 ## Getting started
 
-Deploy Cloud 9 either in [us-east-1](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=demo-soafee-aws-iotfleetwise&templateURL=https://raw.githubusercontent.com/aws-samples/demo-soafee-aws-iotfleetwise/main/cloud9/cdk.out/cloud9-env.template.json) or [eu-central-1](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=demo-soafee-aws-iotfleetwise&templateURL=https://raw.githubusercontent.com/aws-samples/demo-soafee-aws-iotfleetwise/main/cloud9/cdk.out/cloud9-env.template.json)
+Deploy Cloud 9 in one of the supported regions
 
+[![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/us-east-1.svg)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-us-east-1.s3.us-east-1.amazonaws.com/cloud9-env.template.json)
 
-Run the following script to deploy the cdk stack that will deploy all the cloud resources as shown on the architeture above.
+[![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/eu-central-1.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-eu-central-1.s3.eu-central-1.amazonaws.com/cloud9-env.template.json)
+
+Open the Cloud9 IDE and in a terminal run the following script to deploy the cdk stack that will deploy all the cloud resources as shown on the architeture above.
 
 ```sh
 ./script/deploy-cloud.sh
@@ -34,14 +37,14 @@ curl -sfL https://get.k3s.io | sh -
 Build the Vehicle Simulator container image that will feed CAN Bus Data in to the AWS IoT FleetWise Edge
 
 ```sh
-./script/build-vsim.sh
+./scripts/build-vsim.sh
 ```
 
 Load certificate and key into k3s secrets
 
 ```sh
-kubectl create secret generic private-key --from-file=./.tmp/private-key.key
-kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
+sudo kubectl create secret generic private-key --from-file=./.tmp/private-key.key
+sudo kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 ```
 
 Deploy the kubernetes manifest to k3s
