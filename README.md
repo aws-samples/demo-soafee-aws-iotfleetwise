@@ -8,8 +8,6 @@ The demo will walk you through the exercise of running on [EWAOL](https://github
 
 > TODO: Add Architecture
 
-> :warning: **At the time of writing, AWS Iot FleetWise is available only in us-east-1 and eu-central-1, so be sure to use one of the mentioned regions**
-
 ## Getting started
 
 Deploy Cloud 9 in one of the supported regions
@@ -18,10 +16,15 @@ Deploy Cloud 9 in one of the supported regions
 
 [![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/eu-central-1.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-eu-central-1.s3.eu-central-1.amazonaws.com/cloud9-env.template.json)
 
-Open the Cloud9 IDE and in a terminal run the following script to deploy the cdk stack that will deploy all the cloud resources as shown on the architeture above.
+Acknoledge the creation of the stack and press the button *create* on the bottom right. Wait for the two stacks to be created.
+
+[Open Cloud9](https://console.aws.amazon.com/cloud9/home#) and in a terminal run the following script to deploy the cdk stack that will deploy all the cloud resources as shown on the architecture above.
 
 ```sh
-./script/deploy-cloud.sh
+git clone https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git
+cd ~/environment/demo-soafee-aws-iotfleetwise
+./scripts/resize-c9.sh 20
+./scripts/deploy-cloud.sh
 ```
 
 ### Get AWS FleetWise Edge running on the Build Host
@@ -32,28 +35,29 @@ We will be using the orchestrator (k3s) used in EWAOL. So let's get started by i
 
 ```sh
 curl -sfL https://get.k3s.io | sh -
+sudo ln -s /usr/local/bin/kubectl /usr/bin/kubectl
 ```
 
 Build the Vehicle Simulator container image that will feed CAN Bus Data in to the AWS IoT FleetWise Edge
 
 ```sh
-./scripts/build-vsim.sh
+sudo ./scripts/build-vsim.sh
 ```
 
 Load certificate and key into k3s secrets
 
 ```sh
-sudo kubectl create secret generic private-key --from-file=./.tmp/private-key.key
-sudo kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
+sudo /usr/local/bin/kubectl create secret generic private-key --from-file=./.tmp/private-key.key
+sudo /usr/local/bin/kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 ```
 
 Deploy the kubernetes manifest to k3s
 
 ```sh
-./script/deploy-k3s.sh
+./scripts/deploy-k3s.sh
 ```
 
-Now you can connect to the Vehicle Simulator Webapp, change things like opening the doors and observe the data signals values being fed into our Amazon Timestream table.
+Now you can connect to the Vehicle Simulator Webapp opening the Cloud9 preview, change things like opening the doors and observe the data signals values being fed into our Amazon Timestream table.
 
 ### Get AWS FleetWise Edge running on an EWAOL Virtual Target 
 
