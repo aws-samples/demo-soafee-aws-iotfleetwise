@@ -1,5 +1,3 @@
-> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
-
 # Welcome to the SOAFEE AWS IoT Fleetwise demo
 
 The repository contains the instructions and code that allows you to reproduce the demo shown in the session [**Achieving environmental parity through multiple layers of abstractions helps to support AWS IoT FleeWise edge on EWAOL**](https://www.youtube.com/watch?v=Wd1isAmTtp8) at [SOAFEE Virtual Symposium 2022](https://soafee.io/blog/2022/virtual_symposium/).
@@ -71,15 +69,15 @@ aws timestream-query query --query-string \
 
 ### Get AWS FleetWise Edge running on an EWAOL Virtual Target 
 
-TODO
+> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
 
 ### Get AWS FleetWise Edge running on an EWAOL Physical Target 
 
-TODO
+> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
 
 ### Cleanup
 
-TODO
+> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
 
 ---
 
