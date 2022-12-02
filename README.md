@@ -78,15 +78,15 @@ Please note that DoorsState is encoded on 5 bits. So if you read 1, that means t
 
 ### Get AWS FleetWise Edge running on an EWAOL Virtual Target 
 
-> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
+> :warning: THIS SECTION IS UNDER CONSTRUCTION, STAY TUNED !!!
 
 ### Get AWS FleetWise Edge running on an EWAOL Physical Target 
 
-> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
+> :warning: THIS SECTION IS UNDER CONSTRUCTION, STAY TUNED !!!
 
 ### Cleanup
 
-> :warning: THE CONTENT ON THIS REPO IS UNDER CONSTRUCTION !!!
+From [CloudFormation](https://console.aws.amazon.com/cloudformation/home) just delete `demo-soafee-aws-iotfleetwise` and `demo-soafee-aws-iotfleetwise-cloud9` stacks.
 
 ---
 
