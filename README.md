@@ -18,7 +18,7 @@ Deploy Cloud 9 in one of the supported regions
 
 Acknoledge the creation of the stack and press the button **CREATE** on the bottom right. Wait for the two stacks to be created.
 
-[Open Cloud9](https://console.aws.amazon.com/cloud9/home#) and, in a terminal, run the following script to deploy the cdk stack that will deploy all the cloud resources as shown on the architecture above.
+[Open Cloud9](https://console.aws.amazon.com/cloud9/home#) and, in a terminal, run the following script to create the cdk stack that will deploy all the cloud resources as shown on the architecture above
 
 ```sh
 git clone https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git
@@ -61,7 +61,7 @@ Now you can connect to the Vehicle Simulator Webapp opening the Cloud9 preview
 
 ![Preview menu](docs/preview%20menu.png)
 
-You can try changing things such as opening/closing the vehicle doors and observe how the data signals values are fed into our Amazon Timestream table. You can either use [AWS console](https://console.aws.amazon.com/timestream/home?#query-editor:) to make the query or you can paste the commands below in one of the Cloud9 terminals.
+You can try changing things such as opening/closing the vehicle doors and observe how the data signals values are fed into our Amazon Timestream table. You can either use [Amazon Timestream console](https://console.aws.amazon.com/timestream/home?#query-editor:) to run the query or you can paste the command below in one of the Cloud9 terminals.
 
 ```sh
 aws timestream-query query --query-string \
