@@ -14,9 +14,13 @@ Deploy Cloud 9 in one of the supported regions
 
 [![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/eu-central-1.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-eu-central-1.s3.eu-central-1.amazonaws.com/cloud9-env.template.json)
 
-Acknoledge the creation of the stack and press the button **CREATE** on the bottom right. Wait for the two stacks to be created.
+Acknoledge the creation of the stack and press the button **Create stack** on the bottom right. 
 
-[Open Cloud9](https://console.aws.amazon.com/cloud9/home#) and, in a terminal, run the following script to create the cdk stack that will deploy all the cloud resources as shown on the architecture above
+![Create Stack](docs/createstack.png)
+
+The ```demo-soafee-aws-iotfleetwise-cloud9``` CloudFormation stack will take about **3 minutes** to be created.
+
+When stack creation has finished, [open Cloud9](https://console.aws.amazon.com/cloud9/home#) and, in a terminal, run the following script to create the cdk stack that will deploy all the cloud resources as shown on the architecture above
 
 ```sh
 git clone https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git
@@ -24,6 +28,8 @@ cd ~/environment/demo-soafee-aws-iotfleetwise
 ./scripts/resize-c9.sh 20
 ./scripts/deploy-cloud.sh
 ```
+
+The above commands will take about **10 minutes** to complete. While you wait we encorage you to appreciate how the cloud resources gets deployied through [CDK](https://aws.amazon.com/cdk/) leveraging the [AWS IoT FleetWise Construct Library](https://github.com/aws-samples/cdk-aws-iotfleetwise) having a look to [this file](https://github.com/aws-samples/demo-soafee-aws-iotfleetwise/blob/main/cloud/src/main.py).
 
 ### Get AWS FleetWise Edge running on the Build Host
 
@@ -54,6 +60,7 @@ Deploy the kubernetes manifest to k3s
 ```sh
 ./scripts/deploy-k3s.sh
 ```
+The script shows you the AWS IoT FleetWise Edge log. If you stop the script with CTRL+C will terminate the containers so if you want to run other commands without stopping the containers, open another terminal.
 
 Now you can connect to the Vehicle Simulator Webapp opening the Cloud9 preview
 
@@ -63,9 +70,11 @@ You can try changing things such as opening/closing the vehicle doors and observ
 
 ```sh
 aws timestream-query query --query-string \
-  "SELECT * FROM FleetWise.FleetWise WHERE time > ago(5m) ORDER BY time DESC LIMIT 3" \
+  "SELECT * FROM FleetWise.FleetWise WHERE time > ago(5m) ORDER BY time DESC LIMIT 2" \
   | jq -r '.Rows[].Data[].ScalarValue'
 ```
+
+Please note that DoorsState is encoded on 5 bits. So if you read 1, that means the front left door is open while the others are closed.
 
 ### Get AWS FleetWise Edge running on an EWAOL Virtual Target 
 

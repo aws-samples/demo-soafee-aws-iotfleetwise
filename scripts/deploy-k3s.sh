@@ -19,7 +19,7 @@ function ctrl_c() {
 # kubectl create secret generic certificate --from-file=./.tmp/certificate.pem
 
 # Deploy
-modprobe vcan
+sudo modprobe vcan
 sudo kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
