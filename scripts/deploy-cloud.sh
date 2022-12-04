@@ -7,8 +7,8 @@ while true; do
     if sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; then
         i=0
     else
-        i=\`expr $i + 1\`
-        if expr $i \\>= 10 > /dev/null; then
+        i=`expr $i + 1`
+        if expr $i \>= 10 > /dev/null; then
             break
         fi
     fi
