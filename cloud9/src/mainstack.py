@@ -25,6 +25,10 @@ class MainStack(Stack):
             image_id='ubuntu-18.04-x86_64',
             name='Demo SOAFEE AWS IoT Fleetwise',
             description='Demo SOAFEE AWS IoT Fleetwise',
+            repositories=[
+                cloud9.CfnEnvironmentEC2.RepositoryProperty(
+                    path_component='/demo-soafee-aws-iotfleetwise',
+                    repository_url='https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git')],
             tags=[CfnTag(key='SSMBootstrap', value='Active')]
         )
 

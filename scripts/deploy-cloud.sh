@@ -1,8 +1,23 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+
+# Wait for any existing package install to finish
+i=0
+while true; do
+    if sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; then
+        i=0
+    else
+        i=\`expr $i + 1\`
+        if expr $i \\>= 10 > /dev/null; then
+            break
+        fi
+    fi
+    sleep 1
+done
+
 sudo apt-get -y update
 sudo apt-get -y install jq gettext bash-completion moreutils linux-modules-extra-$(uname -r) \
-                        python3.8 python3.8-dev python3.8-distutils python3.8-venv
+    python3.8 python3.8-dev python3.8-distutils python3.8-venv
 export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a /home/ubuntu/.bash_profile

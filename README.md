@@ -23,7 +23,6 @@ The ```demo-soafee-aws-iotfleetwise-cloud9``` CloudFormation stack will take abo
 When stack creation has finished, [open Cloud9](https://console.aws.amazon.com/cloud9/home#) and, in a terminal, run the following script to create the cdk stack that will deploy all the cloud resources as shown on the architecture above
 
 ```sh
-git clone https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git
 cd ~/environment/demo-soafee-aws-iotfleetwise
 ./scripts/resize-c9.sh 20
 ./scripts/deploy-cloud.sh
