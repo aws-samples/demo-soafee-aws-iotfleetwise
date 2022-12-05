@@ -10,11 +10,11 @@ The demo will walk you through the exercise of running on [EWAOL](https://github
 
 Deploy Cloud 9 in one of the supported regions
 
-[![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/us-east-1.svg)](https://external.ink?to=https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-us-east-1.s3.us-east-1.amazonaws.com/cloud9-env.template.json)
+[![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/us-east-1.svg)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-eu-central-1.s3.eu-central-1.amazonaws.com/cloud9-env.template.json)
 
 [![Launch](https://samdengler.github.io/cloudformation-launch-stack-button-svg/images/eu-central-1.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?stackName=demo-soafee-aws-iotfleetwise-cloud9&templateURL=https://demo-soafee-aws-iot-fleetwise-eu-central-1.s3.eu-central-1.amazonaws.com/cloud9-env.template.json)
 
-Acknoledge the creation of the stack and press the button **Create stack** on the bottom right. 
+Acknowledge the creation of the stack and press the button **Create stack** on the bottom right. 
 
 ![Create Stack](docs/createstack.png)
 
@@ -73,7 +73,15 @@ aws timestream-query query --query-string \
   | jq -r '.Rows[].Data[].ScalarValue'
 ```
 
-Please note that DoorsState is encoded on 5 bits. So if you read 1, that means the front left door is open while the others are closed.
+Please note that DoorsState is encoded on 5 bits and the value associated with each door is shown below. The left and right reference are from the point of view of facing the road ahead, while seated inside the vehicle.
+
+|Value|Door|
+|-|-|
+|1|Front left|
+|2|Front right|
+|4|Rear left|
+|8|Rear right|
+|16|Vehicle trunk lid|
 
 ### Get AWS FleetWise Edge running on an EWAOL Virtual Target 
 
