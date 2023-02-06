@@ -42,7 +42,7 @@ spec:
         add: ["CAP_NET_ADMIN"]
   containers:
   - name: fwe
-    image: public.ecr.aws/aws-iot-fleetwise-edge/aws-iot-fleetwise-edge:v0.1.36
+    image: public.ecr.aws/aws-iot-fleetwise-edge/aws-iot-fleetwise-edge:v1.0.3
     imagePullPolicy: Always
     env:
     - name: CAN_BUS0
