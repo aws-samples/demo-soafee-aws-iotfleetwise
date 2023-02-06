@@ -15,7 +15,7 @@ export class MyChart extends Chart {
     const pod = new kplus.Pod(this, 'Pod');
     const fwe = pod.addContainer({
       name: 'fwe',
-      image: 'public.ecr.aws/aws-iot-fleetwise-edge/aws-iot-fleetwise-edge:v0.1.36',
+      image: 'public.ecr.aws/aws-iot-fleetwise-edge/aws-iot-fleetwise-edge:v1.0.3',
       imagePullPolicy: kplus.ImagePullPolicy.IF_NOT_PRESENT,
       securityContext: {
         readOnlyRootFilesystem: false,
