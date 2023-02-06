@@ -28,7 +28,7 @@ cd ~/environment/demo-soafee-aws-iotfleetwise
 ./scripts/deploy-cloud.sh
 ```
 
-The above commands will take about **10 minutes** to complete. While you wait we encorage you to appreciate how the cloud resources gets deployied through [CDK](https://aws.amazon.com/cdk/) leveraging the [AWS IoT FleetWise Construct Library](https://github.com/aws-samples/cdk-aws-iotfleetwise) having a look to [this file](https://github.com/aws-samples/demo-soafee-aws-iotfleetwise/blob/main/cloud/src/main.py).
+The above commands will take about **10 minutes** to complete. While you wait we encorage you to appreciate how the cloud resources gets deployed through [CDK](https://aws.amazon.com/cdk/) leveraging the [AWS IoT FleetWise Construct Library](https://github.com/aws-samples/cdk-aws-iotfleetwise) having a look to [this file](https://github.com/aws-samples/demo-soafee-aws-iotfleetwise/blob/main/cloud/src/main.py).
 
 ### Get AWS FleetWise Edge running on the Build Host
 
@@ -128,5 +128,3 @@ AND DISCLAIMERS APPLY EXCEPT TO THE EXTENT PROHIBITED BY APPLICABLE LAW.
 vsim/Dockerfile depends on third party **docker/library/node** container image, please refer to [license section](https://gallery.ecr.aws/docker/library/node) 
 
 vsim/Dockerfile depends on third party **docker/library/python** container image, please refer to [license section](https://gallery.ecr.aws/docker/library/python)
-
-![qrcode](docs/qrcode.png)
