@@ -30,7 +30,7 @@ docker run -d \
        --tmpfs /run \
        --tmpfs /run/lock \
        --name fwe \
-       public.ecr.aws/aws-iot-fleetwise-edge/aws-iot-fleetwise-edge:v0.1.36  
+       public.ecr.aws/aws-iot-fleetwise-edge/aws-iot-fleetwise-edge:v1.0.3  
 echo "done"
 
 echo -n "Starting vsim container..."
