@@ -14,6 +14,12 @@ class MyStack(Stack):
   def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
     super().__init__(scope, construct_id, **kwargs)
 
+    role = iam.Role(self, "MyRole",
+                        assumed_by=iam.ServicePrincipal("iotfleetwise.amazonaws.com"),
+                        managed_policies=[
+                            iam.ManagedPolicy.from_aws_managed_policy_name("AdministratorAccess")
+                        ])
+    
     database_name = "FleetWise"
     table_name = "FleetWise"
     database = ts.CfnDatabase(self, "MyDatabase",
@@ -39,8 +45,8 @@ class MyStack(Stack):
 
     signal_catalog = ifw.SignalCatalog(self, "FwSignalCatalog",
                                         description='my signal catalog',
-                                        database=database,
-                                        table=table,
+                                       # database=database,
+                                       # table=table,
                                         nodes=nodes)
 
     with open('../dbc/mymodel.dbc') as f:
@@ -73,4 +79,8 @@ class MyStack(Stack):
                       ifw.CampaignSignal('Vehicle.AmbientAirTemperature'),
                       ifw.CampaignSignal('Vehicle.DoorsState'),
                   ],
+                  campaign_s3arn="",
+                  timestream_arn= table.attr_arn,
+                  fw_timestream_role=role.role_arn,
+                  use_s3=False,
                   auto_approve=True)
