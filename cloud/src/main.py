@@ -47,20 +47,20 @@ class MyStack(Stack):
                                        nodes=nodes)
 
     with open('../dbc/mymodel.dbc') as f:
-      my_model = ifw.VehicleModel(self, 'MyModel1',
-                                  signal_catalog=signal_catalog,
-                                  name='my_model',
-                                  description='My Model vehicle',
-                                  network_interfaces=[ifw.CanVehicleInterface(interface_id='1', name=f'{vehicle_can_interface}')],
-                                  network_file_definitions=[ifw.CanDefinition(
-                                      '1',
-                                      signals_map_my_model,
-                                      [f.read()])])
+        my_model = ifw.VehicleModel(self, 'MyModel1',
+                                    signal_catalog=signal_catalog,
+                                    name='my_model',
+                                    description='My Model vehicle',
+                                    network_interfaces=[ifw.CanVehicleInterface(interface_id='1', name=f'{vehicle_can_interface}')],
+                                    network_file_definitions=[ifw.CanDefinition(
+                                       '1',
+                                       signals_map_my_model,
+                                       [f.read()])])
 
     vin100 = ifw.Vehicle(self, vehicle_name,
-                          vehicle_name=vehicle_name,
-                          vehicle_model=my_model,
-                          create_iot_thing=True)
+                         vehicle_name=vehicle_name,
+                         vehicle_model=my_model,
+                         create_iot_thing=True)
     
     ifw.Fleet(self, 'fleet1',
               fleet_id='fleet1',
