@@ -79,8 +79,5 @@ class MyStack(Stack):
                       ifw.CampaignSignal('Vehicle.AmbientAirTemperature'),
                       ifw.CampaignSignal('Vehicle.DoorsState'),
                   ],
-                  campaign_s3arn="",
-                  timestream_arn= table.attr_arn,
-                  fw_timestream_role=role.role_arn,
-                  use_s3=False,
+                  data_destination_configs=[ifw.TimestreamConfigProperty(role.role_arn, table.attr_arn)],
                   auto_approve=True)
