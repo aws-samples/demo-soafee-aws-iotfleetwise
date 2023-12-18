@@ -31,7 +31,9 @@ class MyStack(Stack):
 
     table.node.add_dependency(database)
 
-    nodes = [ifw.SignalCatalogBranch('Vehicle', 'Vehicle')]
+    
+    nodes = [ifw.SignalCatalogBranch(
+            fully_qualified_name='Vehicle')]
     signals_map_my_model = {}
     with open('../dbc/mymodel.dbc') as f:
       lines = f.readlines()
