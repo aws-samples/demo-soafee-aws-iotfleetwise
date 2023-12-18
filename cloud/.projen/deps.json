@@ -16,7 +16,7 @@
       "type": "runtime"
     },
     {
-      "name": "cdk-aws-iotfleetwise>=0.2.12",
+      "name": "cdk-aws-iotfleetwise>=0.3.2",
       "type": "runtime"
     },
     {
