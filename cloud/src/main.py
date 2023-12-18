@@ -56,7 +56,7 @@ class MyStack(Stack):
                                   signal_catalog=signal_catalog,
                                   name='my_model',
                                   description='My Model vehicle',
-                                  network_interfaces=[ifw.CanVehicleInterface(interface_id='1', name=vehicle_can_interface)],
+                                  network_interfaces=[ifw.CanVehicleInterface(interface_id='1', name=f'{vehicle_can_interface}')],
                                   network_file_definitions=[ifw.CanDefinition(
                                       '1',
                                       signals_map_my_model,
