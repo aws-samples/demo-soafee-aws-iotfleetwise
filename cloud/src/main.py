@@ -22,12 +22,9 @@ class MyStack(Stack):
     
     database_name = "FleetWise"
     table_name = "FleetWise"
-    database = ts.CfnDatabase(self, "MyDatabase",
-                              database_name=database_name)
+    database = ts.CfnDatabase(self, "MyDatabase", database_name=database_name)
 
-    table = ts.CfnTable(self, "MyTable",
-                        database_name=database_name,
-                        table_name=table_name)
+    table = ts.CfnTable(self, "MyTable", database_name=database_name, table_name=table_name)
 
     table.node.add_dependency(database)
 
@@ -47,8 +44,6 @@ class MyStack(Stack):
 
     signal_catalog = ifw.SignalCatalog(self, "FwSignalCatalog",
                                         description='my signal catalog',
-                                       # database=database,
-                                       # table=table,
                                         nodes=nodes)
 
     with open('../dbc/mymodel.dbc') as f:
@@ -67,6 +62,12 @@ class MyStack(Stack):
                           vehicle_model=my_model,
                           create_iot_thing=True)
     
+    ifw.Fleet(self, 'fleet1',
+              fleet_id='fleet1',
+              signal_catalog=signal_catalog,
+              description='my fleet1',
+              vehicles=[vin100])
+    
     CfnOutput(self, 'privateKey', value=vin100.private_key)
     CfnOutput(self, 'certificate', value=vin100.certificate_pem)
     CfnOutput(self, 'endpointAddress', value=vin100.endpoint_address)
@@ -74,12 +75,12 @@ class MyStack(Stack):
     CfnOutput(self, 'vehicleCanInterface', value=vehicle_can_interface)
 
     ifw.Campaign(self, 'MyCampaign',
-                  name='my-campaign',
-                  target=vin100,
-                  collection_scheme=ifw.TimeBasedCollectionScheme(Duration.seconds(10)),
-                  signals=[
-                      ifw.CampaignSignal('Vehicle.AmbientAirTemperature'),
-                      ifw.CampaignSignal('Vehicle.DoorsState'),
-                  ],
-                  data_destination_configs=[ifw.TimestreamConfigProperty(role.role_arn, table.attr_arn)],
-                  auto_approve=True)
+                 name='my-campaign',
+                 target=vin100,
+                 collection_scheme=ifw.TimeBasedCollectionScheme(Duration.seconds(10)),
+                 signals=[
+                   ifw.CampaignSignal('Vehicle.AmbientAirTemperature'),
+                   ifw.CampaignSignal('Vehicle.DoorsState'),
+                 ],
+                 data_destination_configs=[ifw.TimestreamConfigProperty(role.role_arn, table.attr_arn)],
+                 auto_approve=True)
