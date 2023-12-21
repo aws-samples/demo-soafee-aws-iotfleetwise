@@ -32,7 +32,7 @@ class MyStack(Stack):
 
     table.node.add_dependency(database)
     
-    nodes = [ifw.SignalCatalogBranch('Vehicle','Vehicle')]
+    nodes = [ifw.SignalCatalogBranch(fully_qualified_name='Vehicle')]
     signals_map_my_model = {}
     with open('../dbc/mymodel.dbc') as f:
         lines = f.readlines()
@@ -40,12 +40,14 @@ class MyStack(Stack):
             found = re.search(r'^\s+SG_\s+(\w+)\s+.*', line)
             if found:
                 signal_name = found.group(1)
-                nodes.append(ifw.SignalCatalogSensor(f'Vehicle.{signal_name}', 'DOUBLE'))
+                nodes.append(ifw.SignalCatalogSensor(fully_qualified_name=f'Vehicle.{signal_name}', data_type='DOUBLE'))
                 signals_map_my_model[signal_name] = f'Vehicle.{signal_name}'
 
     signal_catalog = ifw.SignalCatalog(self, "FwSignalCatalog",
                                        description='my signal catalog',
                                        nodes=nodes)
+    
+    
 
     with open('../dbc/mymodel.dbc') as f:
         my_model = ifw.VehicleModel(self, 'MyModel1',
@@ -60,7 +62,7 @@ class MyStack(Stack):
 
     vin100 = ifw.Vehicle(self, vehicle_name,
                          vehicle_name=vehicle_name,
-                         vehicle_model='vin100',
+                         vehicle_model=my_model,
                          create_iot_thing=True)
     
     ifw.Fleet(self, 'fleet1',
