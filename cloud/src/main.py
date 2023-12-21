@@ -23,15 +23,16 @@ class MyStack(Stack):
     
     database_name = "FleetWise"
     table_name = "FleetWise"
-    database = ts.CfnDatabase(self, "MyDatabase", database_name=database_name)
+    database = ts.CfnDatabase(self, "MyDatabase", 
+                              database_name=database_name)
 
-    table = ts.CfnTable(self, "MyTable", database_name=database_name, table_name=table_name)
+    table = ts.CfnTable(self, "MyTable", 
+                        database_name=database_name, 
+                        table_name=table_name)
 
     table.node.add_dependency(database)
-
     
-    nodes = [ifw.SignalCatalogBranch(
-        fully_qualified_name='Vehicle')]
+    nodes = [ifw.SignalCatalogBranch('Vehicle','Vehicle')]
     signals_map_my_model = {}
     with open('../dbc/mymodel.dbc') as f:
         lines = f.readlines()
@@ -39,9 +40,8 @@ class MyStack(Stack):
             found = re.search(r'^\s+SG_\s+(\w+)\s+.*', line)
             if found:
                 signal_name = found.group(1)
-                nodes.append(ifw.SignalCatalogSensor(fully_qualified_name=f'Vehicle.{signal_name}', data_type='DOUBLE'))
+                nodes.append(ifw.SignalCatalogSensor(f'Vehicle.{signal_name}', 'DOUBLE'))
                 signals_map_my_model[signal_name] = f'Vehicle.{signal_name}'
-                    
 
     signal_catalog = ifw.SignalCatalog(self, "FwSignalCatalog",
                                        description='my signal catalog',
@@ -60,7 +60,7 @@ class MyStack(Stack):
 
     vin100 = ifw.Vehicle(self, vehicle_name,
                          vehicle_name=vehicle_name,
-                         vehicle_model=my_model,
+                         vehicle_model='vin100',
                          create_iot_thing=True)
     
     ifw.Fleet(self, 'fleet1',

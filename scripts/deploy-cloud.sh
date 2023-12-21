@@ -29,7 +29,7 @@ cdk bootstrap aws://${ACCOUNT_ID}/${AWS_REGION}
 
 mkdir -p .tmp
 pushd cloud
-python3.8 -m venv venv
+python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cdk deploy --require-approval never --outputs-file ../.tmp/cdk-outputs.json
