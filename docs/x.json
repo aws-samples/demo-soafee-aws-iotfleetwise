@@ -6,7 +6,7 @@
        "InstanceType": "m4.large",
        "AutomaticStopTimeMinutes": 120,
        "Description": "Demo SOAFEE AWS IoT Fleetwise",
-       "ImageId": "ubuntu-18.04-x86_64",
+       "ImageId": "ubuntu-22.04-x86_64",
        "Name": "Demo SOAFEE AWS IoT Fleetwise",
        "Repositories": [
         {

@@ -10,6 +10,7 @@ vehicle_name = 'vin100'
 vehicle_can_interface = 'vcan0'
 
 class MyStack(Stack):
+  
 
   def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
     super().__init__(scope, construct_id, **kwargs)
