@@ -28,7 +28,10 @@ class MainStack(Stack):
             repositories=[
                 cloud9.CfnEnvironmentEC2.RepositoryProperty(
                     path_component='/demo-soafee-aws-iotfleetwise',
-                    repository_url='https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git')],
+                    #repository_url='https://github.com/aws-samples/demo-soafee-aws-iotfleetwise.git')],
+                    repository_url='https://github.com/rmncardoso/demo-soafee-aws-iotfleetwise.git')],
+                    
+                    
             tags=[CfnTag(key='SSMBootstrap', value='Active')]
         )
 
