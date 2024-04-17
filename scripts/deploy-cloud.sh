@@ -15,6 +15,10 @@ while true; do
     sleep 1
 done
 
+
+sudo apt-get -y update
+sudo apt install python3.7
+sudo apt install python3.7-venv
 sudo apt-get -y update
 sudo apt-get -y install jq gettext bash-completion moreutils linux-modules-extra-$(uname -r)
 export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
@@ -28,7 +32,10 @@ cdk bootstrap aws://${ACCOUNT_ID}/${AWS_REGION}
 
 mkdir -p .tmp
 pushd cloud
-python -m venv venv
+python3.7 -m pip install --upgrade pip
+python3.7 -m pip install --upgrade virtualenv
+python3.7 --version
+python3.7 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cdk deploy --require-approval never --outputs-file ../.tmp/cdk-outputs.json
