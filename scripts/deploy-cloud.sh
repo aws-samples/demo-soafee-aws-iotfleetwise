@@ -17,9 +17,6 @@ done
 
 
 sudo apt-get -y update
-sudo apt install python3.7
-sudo apt install python3.7-venv
-sudo apt-get -y update
 sudo apt-get -y install jq gettext bash-completion moreutils linux-modules-extra-$(uname -r)
 export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
@@ -32,10 +29,7 @@ cdk bootstrap aws://${ACCOUNT_ID}/${AWS_REGION}
 
 mkdir -p .tmp
 pushd cloud
-python3.7 -m pip install --upgrade pip
-python3.7 -m pip install --upgrade virtualenv
-python3.7 --version
-python3.7 -m venv venv
+python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cdk deploy --require-approval never --outputs-file ../.tmp/cdk-outputs.json
