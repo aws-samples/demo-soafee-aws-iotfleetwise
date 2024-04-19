@@ -24,6 +24,7 @@ echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a /home/ubuntu/.bash_profile
 echo "export AWS_REGION=${AWS_REGION}" | tee -a /home/ubuntu/.bash_profile
 aws configure set default.region ${AWS_REGION}
 aws configure set default.account ${ACCOUNT_ID}
+aws iotfleetwise register-account
 git config --global core.autocrlf false
 cdk bootstrap aws://${ACCOUNT_ID}/${AWS_REGION}
 
