@@ -8,7 +8,7 @@ project = AwsCdkPythonApp(
     name="demo-soafee-aws-iotfleetwise",
     version="0.1.0",
     deps=[
-        'cdk-aws-iotfleetwise>=0.3.2',
+        'cdk-aws-iotfleetwise==0.3.2',
     ]
 )
 
