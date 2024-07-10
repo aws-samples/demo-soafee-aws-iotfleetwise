@@ -20,7 +20,7 @@ class MainStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         c9 = cloud9.CfnEnvironmentEC2(self,'MyCfnEnvironmentEC2',
-            instance_type='m4.large',
+            instance_type='m5.large',
             automatic_stop_time_minutes=120,
             image_id='ubuntu-18.04-x86_64',
             name='Demo SOAFEE AWS IoT Fleetwise',
