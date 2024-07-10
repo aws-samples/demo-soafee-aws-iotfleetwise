@@ -22,9 +22,10 @@ class MainStack(Stack):
         c9 = cloud9.CfnEnvironmentEC2(self,'MyCfnEnvironmentEC2',
             instance_type='m5.large',
             automatic_stop_time_minutes=120,
-            image_id='ubuntu-18.04-x86_64',
+            image_id='ubuntu-22.04-x86_64',
             name='Demo SOAFEE AWS IoT Fleetwise',
             description='Demo SOAFEE AWS IoT Fleetwise',
+            owner_arn='arn:aws:sts::423752711601:assumed-role/GenAI-hackathon-data-generation/aandraca-Isengard',
             repositories=[
                 cloud9.CfnEnvironmentEC2.RepositoryProperty(
                     path_component='/demo-soafee-aws-iotfleetwise',
